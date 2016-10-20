@@ -1,0 +1,26 @@
+<ion-view view-title="Welcome">
+  <ion-content class="padding">
+    
+    <form ng-submit="submitRegister()">  
+    <div class="list">
+	  <label class="item item-input item-floating-label">
+	    <span class="input-label">First Name</span>
+	    <input type="text" placeholder="First Name" ng-model="user.first">
+	  </label>
+	  <label class="item item-input item-floating-label">
+	    <span class="input-label">Last Name</span>
+	    <input type="text" placeholder="Last Name" ng-model="user.last">
+	  </label>
+	  <label class="item item-input item-floating-label">
+	    <span class="input-label">Email</span>
+	    <input type="text" placeholder="Email" ng-model="user.email">
+	  </label>
+	  <label class="item item-input item-floating-label">
+	    <span class="input-label">Password</span>
+	    <input type="password" placeholder="Password" ng-model="user.password">
+	  </label>
+	  <button type="submit" class="button button-positive button-full-width">Register</button>
+	</div>
+	</form>
+  </ion-content>
+</ion-view>
