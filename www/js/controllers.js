@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$rootScope,$http) {
 
-  $scope.loginData = {};
+ 
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -22,41 +22,79 @@ angular.module('starter.controllers', [])
   };
 
   // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
+  
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
+   $scope.loginData = {};//must put outside of function submit
+   $scope.doLogin = function() {
+     console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
+     console.log("  $scope.loginData ===="+  $scope.loginData);
+ ////////////
+ $http.post( API_URL +'looooginnn',$scope.loginData.email,$scope.loginData.password)
+    .then(function(response){///take data from laravel to ionic returrrrrrrrn
+    console.log("Register process Done with response of:");
+      console.log(response.data);
+       alert(response.data);
+    });//fun then
+
+     ////////////
+  /* $timeout(function() {
       $scope.closeLogin();
     }, 1000);
-  };
-})
+*/
+  };//fun do login
 
 
-.controller('HomeCtrl', function($scope,$http) {
-  $scope.user = {
-    first: "Aya",
-    last: "",
-    email: "",
-  };
+})//controller
 
+
+
+///////////////////MEEEEEEEEEEEE/////////////////
+.controller('HomeCtrl', function($scope,$http, $rootScope) {
+  $scope.test = "Ana Test";
+
+  /*$http.get(API_URL + 'login').then(function(response){
+    console.log(response.data);
+    $scope.test = response.data;
+  });*/
+$scope.user = {};
+//send data from ionic to laravel  submiiiiiiiiiiiiiiiit buttton
   $scope.submitRegister = function(){
-    console.log($scope.user);
-    $http.post( API_URL + '/register',$scope.user)
-    .then(function(response){
-      console.log("Register process Done with response of:");
+  console.log($scope.user);
+    $http.post( API_URL +'register',$scope.user)
+    .then(function(response){///take data from laravel to ionic returrrrrrrrn
+    console.log("Register process Done with response of:");
+     console.log("  $scope.user.type ===="+  $scope.user.type);
+      console.log( $scope.user);
       console.log(response.data);
-    });
-  };
+       alert(response.data);       
+        console.log(response.data.localeCompare("notDone")); 
+      console.log(response.data.length); 
+      var a= response.data.length;
+       if( a>5 )
+       document.getElementById("resultregister").innerHTML = "we have already user in this email " ;
+     else        document.getElementById("resultregister").innerHTML = "" ;
+
+    });//fun then
+
+  };//fun submit
+
+ $rootScope.genericName = "diver";
+
+ $rootScope.typeuser =$scope.user.type;
 
 
 })
+
+
+
+
+
 
 .controller('PlaylistsCtrl', function($scope,$http) {
   $scope.registerUser = function(){
+
     $http.post('http://localhost:8000/api/register',{email:"ayasalous12343@gmail.com",password:"123"})
-    .then(function(data){
+    .then(function(data){    
       console.log('aya salous in ioniccc');
       console.log(data.response);
 

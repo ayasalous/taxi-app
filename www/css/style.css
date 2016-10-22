@@ -1,1 +1,44 @@
 /* Empty. Add your own CSS if you like */
+
+#input {
+   
+    height: 15px;
+    background: transparent;
+    line-height: 9px;
+    width: 100%;
+}
+#radiocheck{
+   
+    height: 39px;
+    background: transparent;
+    line-height: 10px;
+    width: 100%;
+}
+#submitButton{
+	height: 5px !important;
+margin-top: 8px;
+}
+
+
+
+
+.animate-hide {
+  transition: all linear 0.5s;
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
+}
+
+.animate-hide.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+.check-element {
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
+}
