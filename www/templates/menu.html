@@ -18,9 +18,20 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
+      <ion-item menu-close href="#/app/home">
+        <i class="icon ion-home "></i> &nbsp; Home
         </ion-item>
+
+        <ion-item menu-close href="#/app/register">
+         <i class="icon icon ion-key "></i> &nbsp; Register
+        </ion-item>
+
+        <ion-item menu-close ng-click="login()">
+          <i class="icon ion-person-stalker"></i>&nbsp; Login
+        </ion-item>
+        <ion-item menu-close href="#/app/loginPage">
+          LoginPage
+        </ion-item> 
         <ion-item menu-close href="#/app/search">
           Search
         </ion-item>

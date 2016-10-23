@@ -1,5 +1,11 @@
 /* Empty. Add your own CSS if you like */
-
+#firstinput{
+  
+    height: 15px;
+    background: transparent;
+    line-height: 9px;
+    width: 100%;
+}
 #input {
    
     height: 15px;
@@ -41,4 +47,24 @@ margin-top: 8px;
   padding: 10px;
   border: 1px solid black;
   background: white;
+}
+.background{
+background: rgba(179,220,237,1); 
+
+}
+
+#imageup{
+
+background:white ;
+}
+#divHomePage{
+margin-left: 17px !important;
+  margin-top: 390px !important;
+ width: 500px !important;
+}
+#buttonHome{
+  background-color: #6ca9eb;
+width: 130px !important;
+
+  
 }

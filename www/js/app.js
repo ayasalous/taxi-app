@@ -32,11 +32,22 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
+
+.state('app.loginPage', {
+    url: '/loginPage',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/loginPage.html',
+          controller: 'loginPageCtrl'
+      }
+    }
+  })
   .state('app.search', {
     url: '/search',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/search.html',
+          controller: 'MangerAddDriverCtrl'
       }
     }
   })
@@ -59,6 +70,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+   .state('app.register', {
+      url: '/register',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/register.html',
+          controller: 'RegisterCtrl'
+        }
+      }
+    })
 
 
   .state('app.single', {
@@ -70,6 +90,9 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
 })
+ 
+
+
   .state('app.home', {
     url: '/home',
     views: {

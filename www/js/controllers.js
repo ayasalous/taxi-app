@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,$rootScope,$http) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$rootScope,$http,$location,$state,$window) {
 
  
 
@@ -26,32 +26,90 @@ angular.module('starter.controllers', [])
 
    $scope.loginData = {};//must put outside of function submit
    $scope.doLogin = function() {
+    
+
      console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
      console.log("  $scope.loginData ===="+  $scope.loginData);
- ////////////
- $http.post( API_URL +'looooginnn',$scope.loginData.email,$scope.loginData.password)
+     $http.post( API_URL +'looooginnn',$scope.loginData)
     .then(function(response){///take data from laravel to ionic returrrrrrrrn
     console.log("Register process Done with response of:");
       console.log(response.data);
        alert(response.data);
+       alert(response.data.length);
+       console.log(response.data.length); 
+      var authEmail= response.data.length;
+       if( authEmail>5 ){//not in DB
+ $state.go('app.search');
+ 
+   
+  }//if
+        else{    
+      $state.go('app.browse');
+      
+ }//else
+    
     });//fun then
 
-     ////////////
   /* $timeout(function() {
       $scope.closeLogin();
     }, 1000);
 */
-  };//fun do login
+  
+};//fun do login
 
 
 })//controller
 
 
 
-///////////////////MEEEEEEEEEEEE/////////////////
-.controller('HomeCtrl', function($scope,$http, $rootScope) {
-  $scope.test = "Ana Test";
 
+
+
+.controller('MangerAddDriverCtrl', function($scope,$http, $rootScope,$state) {
+$scope.MangerAddDriver= {};
+//send data from ionic to laravel  submiiiiiiiiiiiiiiiit buttton
+  $scope.MangerAddDriversubmit = function(){
+  console.log($scope.MangerAddDriver);
+    alert("submit is click");
+
+  };//fun submit
+
+})
+
+
+.controller('loginPageCtrl', function($scope,$http, $rootScope,$state) {
+ $scope.loginData = {};//must put outside of function submit
+   $scope.doLogin = function() {
+     console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
+     console.log("  $scope.loginData ===="+  $scope.loginData);
+     $http.post( API_URL +'looooginnn',$scope.loginData)
+    .then(function(response){///take data from laravel to ionic returrrrrrrrn
+    console.log("Register process Done with response of:");
+      console.log(response.data);
+       alert(response.data);
+       alert(response.data.length);
+       console.log(response.data.length); 
+      var authEmail= response.data.length;
+       if( authEmail>5 ){//not in DB
+
+      $state.go('app.browse');                 
+        }//if
+        else{    
+ $state.go('app.search');     
+             }//else
+ });//fun then
+  };//fun do login
+
+})
+
+
+
+
+
+
+///////////////////MEEEEEEEEEEEE/////////////////
+.controller('RegisterCtrl', function($scope,$http, $rootScope,$state) {
+  $scope.test = "Ana Test";
   /*$http.get(API_URL + 'login').then(function(response){
     console.log(response.data);
     $scope.test = response.data;
@@ -77,14 +135,22 @@ $scope.user = {};
     });//fun then
 
   };//fun submit
-
  $rootScope.genericName = "diver";
-
  $rootScope.typeuser =$scope.user.type;
-
-
 })
 
+
+.controller('HomeCtrl', function($scope,$http, $rootScope,$state) {
+ $scope.goToRegisterPage=function(){
+   $state.go('app.register');
+   alert(" in Fun goToRegisterPage");
+ }
+ $scope.goToLoginPage=function(){
+   $state.go('app.loginPage');
+   alert(" in Fun goToRegisterPage");
+ }
+
+})
 
 
 

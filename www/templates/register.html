@@ -1,0 +1,67 @@
+<ion-view view-title="Register Page">
+  <ion-content class="padding">
+    
+
+    <form ng-submit="submitRegister()">  
+    <div class="list">
+	 
+	   <label  class="item item-input item-floating-label">
+    <span class="input-label">First Name</span>
+    <input id="input" type="text" placeholder="First Name" ng-model="user.first" required="please you must fill this field ">
+  </label>
+	 
+	  <label   class="item item-input item-floating-label">
+	    <span class="input-label">Last Name</span>
+	    <input  id="input" type="text" placeholder="Last Name" ng-model="user.last" required="please you must fill this field ">
+	  </label>
+	 
+	  <label class="item item-input item-floating-label">
+	    <span class="input-label">Email</span>
+	    <input id="input" type="email" pattern="[^ @]*@[^ @]*"  placeholder="Email" ng-model="user.email"
+	    required="please you must fill this field ">
+	  </label>
+	  
+	  <label class="item item-input item-floating-label">
+	    <span class="input-label">Password</span>
+	    <input id="input" type="password" placeholder="Password" ng-model="user.password" required="please you must fill this field ">
+	  </label>
+
+<label class="item item-input item-floating-label">
+	    <span class="input-label">Mobile Number</span>
+	    <input id="input" type="number" placeholder="Mobile number " ng-model="user.number" required="please you must fill this field ">
+	  </label>
+
+<br>
+   &nbsp; <font> Type User:</font> 
+<ion-list >
+  <ion-radio   id="radiocheck" ng-model="user.type"   ng-click="show=false;" ng-value="'manger'">Manger</ion-radio>
+  <ion-radio  id="radiocheck" ng-model="user.type" ng-click="show=true;"  ng-value="'driver'">Driver</ion-radio>
+  <ion-radio  id="radiocheck" ng-model="user.type" ng-click="show=false;"  ng-value="'user'">User</ion-radio>
+  </ion-list>
+<br>
+
+
+
+<div ng-if="show">
+ <label   class="item item-input item-floating-label">
+	    <span   class="input-label">Car Number</span>
+	    <input   type="number" placeholder="Car Number " ng-model="user.carnum" required="please you must fill this field ">
+	  </label>
+</div>
+
+
+<font style="color: red"><div id="resultregister"> </div></font>
+
+	 <center> <button id="submitButton" type="submit" class="button button-positive button-full-width">Register</button>
+	 </center>
+	</div>
+	</form>
+
+
+
+	
+
+
+
+  </ion-content>
+</ion-view>

@@ -1,5 +1,59 @@
-<ion-view view-title="Search">
+
+
+
+<ion-view class="background" view-title="Manger Page">
   <ion-content>
-    <h1>Search</h1>
+  
+<div    class="list">
+    <a  id="imageup" class="item item-avatar" href="#">
+      <img src="/img/driver.png">
+     <br> <font ><h2>Welcome manger</h2></font>
+    </a>
+</div>
+
+
+
+<center><h4> ADD Driver</h4></center>
+
+<form ng-submit="MangerAddDriversubmit()">  
+  <div  class="list list-inset">
+
+  <label class="item item-input">
+    <input  type="text" placeholder="First Name" ng-model="MangerAddDriver.first" required="please you must fill this field ">
+  </label>
+
+  <label class="item item-input">
+   <input   type="text" placeholder="Last Name" ng-model="MangerAddDriver.last" required="please you must fill this field ">
+  </label>
+
+  <label class="item item-input">
+  <input  type="email" pattern="[^ @]*@[^ @]*"  placeholder="Email" ng-model="MangerAddDriver.email"
+	    required="please you must fill this field ">
+  </label>
+ 
+  <label class="item item-input">
+  <input  type="password" placeholder="Password" ng-model="MangerAddDriver.password" required="please you must fill this field "> 
+   </label>
+  
+
+	
+  <label class="item item-input">
+<input  type="number" placeholder="Mobile number " ng-model="MangerAddDriver.number" required="please you must fill this field "> 
+</label>
+
+	
+    <label class="item item-input">
+<input  type="number" placeholder="Car number " ng-model="MangerAddDriver.cardnumber" required="please you must fill this field "> 
+</label>
+</div>
+	  
+
+<font style="color: red"><div id="MangerAddDriverResult">&nbsp;&nbsp;&nbsp;&nbsp;jhjk </div></font>
+
+	<center> <button id="submitButton" type="submit" class="button button-positive button-full-width">Register</button></center>
+	</div>
+	</form>
+
+ 
   </ion-content>
 </ion-view>
