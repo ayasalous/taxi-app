@@ -6,8 +6,9 @@
   
 <div    class="list">
     <a  id="imageup" class="item item-avatar" href="#">
-      <img src="/img/driver.png">
-     <br> <font ><h2>Welcome manger</h2></font>
+      <img src="/img/manger.png">
+  {{genericOfficeName}}   Taxi Office 
+     <br> <h2>Welcome  manger : {{  genericFirstName}} {{genericsecondName}}  </h2>
     </a>
 </div>
 
@@ -47,12 +48,20 @@
 </label>
 </div>
 	  
+<div class="padding">
+  {{ result }}
+</div>
+{{genericOfficeName}}
+<input type="hidden" ng-model="genericOfficeInputHidden.nameoffice" ng-value="{{genericOfficeName}}">{{genericOfficeName}}
 
-<font style="color: red"><div id="MangerAddDriverResult">&nbsp;&nbsp;&nbsp;&nbsp;jhjk </div></font>
+<button id="submitButton" type="submit" class="button button-positive">
+  Add Driver
+</button>
 
-	<center> <button id="submitButton" type="submit" class="button button-positive button-full-width">Register</button></center>
-	</div>
 	</form>
+
+ <button id="submitButton" ng-click="goShowDriver()"  class="button button-positive">Show Driver</button>
+
 
  
   </ion-content>

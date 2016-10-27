@@ -14,15 +14,26 @@
     width: 100%;
 }
 #radiocheck{
-   
     height: 39px;
     background: transparent;
     line-height: 10px;
     width: 100%;
 }
+#checkAvilableRadio{
+
+    height: 9px !important;
+    background: transparent;
+    line-height: 10px;
+    width: 100%;
+
+
+}
 #submitButton{
 	height: 5px !important;
-margin-top: 8px;
+
+margin-left:100px !important;
+margin-right: : 50px !important;
+margin-top: 1px !important;
 }
 
 
@@ -59,12 +70,54 @@ background:white ;
 }
 #divHomePage{
 margin-left: 17px !important;
-  margin-top: 390px !important;
+  margin-top: 350px !important;
  width: 500px !important;
 }
 #buttonHome{
   background-color: #6ca9eb;
-width: 130px !important;
-
-  
+width: 130px !important; 
 }
+
+#fontword{
+font-family: "MenschMenschRegular";
+    font-size: 30px;
+    color: #fff;
+  }
+
+
+.scroll {
+    height: 100%;
+}
+ 
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

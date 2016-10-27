@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,$rootScope,$http,$location,$state,$window) {
+.controller('AppCtrl', function($scope,$rootScope, $ionicModal, $timeout,$rootScope,$http,$location,$state,$window) {
 
- 
+ ///$rootScope.hideDriverImg = false;///in fiixed image
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -27,33 +27,10 @@ angular.module('starter.controllers', [])
    $scope.loginData = {};//must put outside of function submit
    $scope.doLogin = function() {
     
-
-     console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
-     console.log("  $scope.loginData ===="+  $scope.loginData);
-     $http.post( API_URL +'looooginnn',$scope.loginData)
-    .then(function(response){///take data from laravel to ionic returrrrrrrrn
-    console.log("Register process Done with response of:");
-      console.log(response.data);
-       alert(response.data);
-       alert(response.data.length);
-       console.log(response.data.length); 
-      var authEmail= response.data.length;
-       if( authEmail>5 ){//not in DB
- $state.go('app.search');
- 
-   
-  }//if
-        else{    
-      $state.go('app.browse');
-      
- }//else
-    
-    });//fun then
-
-  /* $timeout(function() {
+  $timeout(function() {
       $scope.closeLogin();
     }, 1000);
-*/
+
   
 };//fun do login
 
@@ -64,41 +41,61 @@ angular.module('starter.controllers', [])
 
 
 
-
-.controller('MangerAddDriverCtrl', function($scope,$http, $rootScope,$state) {
-$scope.MangerAddDriver= {};
-//send data from ionic to laravel  submiiiiiiiiiiiiiiiit buttton
-  $scope.MangerAddDriversubmit = function(){
-  console.log($scope.MangerAddDriver);
-    alert("submit is click");
-
-  };//fun submit
-
-})
-
-
 .controller('loginPageCtrl', function($scope,$http, $rootScope,$state) {
- $scope.loginData = {};//must put outside of function submit
-   $scope.doLogin = function() {
-     console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
-     console.log("  $scope.loginData ===="+  $scope.loginData);
-     $http.post( API_URL +'looooginnn',$scope.loginData)
-    .then(function(response){///take data from laravel to ionic returrrrrrrrn
-    console.log("Register process Done with response of:");
-      console.log(response.data);
+
+       $scope.loginData = {};//must put outside of function submit
+       $scope.doLogin = function() {
+       console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
+       console.log( $scope.loginData);
+       $http.post( API_URL +'looooginnn',$scope.loginData)
+       .then(function(response){
+       console.log("Register process Done with response of:");
+       console.log(response.data);
        alert(response.data);
        alert(response.data.length);
        console.log(response.data.length); 
-      var authEmail= response.data.length;
-       if( authEmail>5 ){//not in DB
+       var authEmail= response.data.length;
+       console.log(response.data[9]);
+       $rootScope.genericFirstName =response.data[2];//can used in any controller and any page 
+       $rootScope.genericsecondName =response.data[3];
+       $rootScope.genericOfficeName =response.data[10];
+       $rootScope.generictype =response.data[1];//type of user login
+       $rootScope.genericimage =response.data[8];//image of user login
+       
+       $rootScope.genericOfficeInputHidden={};
 
-      $state.go('app.browse');                 
-        }//if
-        else{    
- $state.go('app.search');     
-             }//else
+       console.log(  $rootScope.genericFirstName);
+       console.log(  $rootScope.genericsecondName);
+       console.log(  $rootScope.genericOfficeName);
+       console.log(  $rootScope.genericOfficeName);
+
+       //console.log(  $rootScope.genericOfficeInputHidden.nameoffice);
+       // console.log(  $rootScope.genericOfficeInputHidden);
+      
+     
+       if( response.data[9]=="inDB" )
+       {//not in DB
+        if (response.data[1]=="driver"){
+
+        $state.go('app.driver');
+
+        }
+       if (response.data[1]=="manger"){
+         $state.go('app.search');
+        }
+          if (response.data[1]=="user"){
+         $state.go('app.user');
+        }  
+       
+       }//if
+        else{//inDB  
+               $state.go('app.browse');
+            }//else inDB
  });//fun then
+
   };//fun do login
+
+
 
 })
 
@@ -106,31 +103,127 @@ $scope.MangerAddDriver= {};
 
 
 
-
-///////////////////MEEEEEEEEEEEE/////////////////
-.controller('RegisterCtrl', function($scope,$http, $rootScope,$state) {
-  $scope.test = "Ana Test";
-  /*$http.get(API_URL + 'login').then(function(response){
-    console.log(response.data);
-    $scope.test = response.data;
-  });*/
-$scope.user = {};
-//send data from ionic to laravel  submiiiiiiiiiiiiiiiit buttton
-  $scope.submitRegister = function(){
-  console.log($scope.user);
-    $http.post( API_URL +'register',$scope.user)
-    .then(function(response){///take data from laravel to ionic returrrrrrrrn
-    console.log("Register process Done with response of:");
-     console.log("  $scope.user.type ===="+  $scope.user.type);
+.controller('MangerAddDriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+      $scope.MangerAddDriver= {};
+      $scope.result= "";
+      $scope.MangerAddDriversubmit = function(){
+      $ionicLoading.show();
+      console.log($scope.MangerAddDriver);
+      $http.post( API_URL +'MangerAddDriver',$scope.MangerAddDriver)
+      .then(function(response){//send data from ionic to laravel then return sth
+      $ionicLoading.hide();
+      console.log("Register process Done with response of:");
       console.log( $scope.user);
-      console.log(response.data);
-       alert(response.data);       
-        console.log(response.data.localeCompare("notDone")); 
+      console.log(response.data);       
+      console.log(response.data.localeCompare("notDone")); 
       console.log(response.data.length); 
       var a= response.data.length;
-       if( a>5 )
-       document.getElementById("resultregister").innerHTML = "we have already user in this email " ;
-     else        document.getElementById("resultregister").innerHTML = "" ;
+      if( a>5 )
+      {
+        $scope.result = "we have already user in this email " ;
+      } else
+        {
+          $scope.result = '';
+        }
+    });
+    };//fun MangerAddDriversubmit
+
+      $scope.goShowDriver=function(){
+      $state.go('app.showDriver');
+      console.log(" in Fun goToRegisterPage");
+      console.log(" before send data to laravel To ShowDriver ");
+      console.log($rootScope.genericOfficeName);
+      $scope.office={"nameoffice":$rootScope.genericOfficeName}; 
+      $ionicLoading.show();
+      console.log($scope.office);
+      $http.post( API_URL +'showDriver',$scope.office)
+      .then(function(response){//send data from ionic to laravel then return sth
+      $ionicLoading.hide();
+      console.log(response.data[0]['id']);
+      console.log(response.data.length);
+      for(var i=0;i < response.data.length;i++){
+      $rootScope.ShowAllDriverOffice={
+        "id":response.data[i]['id'],
+        "firstname":response.data[i]['firstname'],
+        "lastname":response.data[i]['lastname'],
+        "email":response.data[i]['email'],
+        "cardnum":response.data[i]['cardnum'],
+        "phonenum":response.data[i]['phonenum'],
+    };//scope
+            }
+
+
+
+   });
+   
+ };//fun
+
+})
+
+.controller('ShowDriverCtrl', function($scope,$http, $rootScope,$state) {
+   console.log("in ShowDriver  controller");
+   console.log($rootScope.genericOfficeName); 
+   /*$scope.office={"nameoffice":$rootScope.genericOfficeName}; 
+   //$ionicLoading.show();
+   console.log($scope.office);
+   $http.post( API_URL +'showDriver',$scope.office)
+   .then(function(response){//send data from ionic to laravel then return sth
+   //$ionicLoading.hide();
+   console.log(response.data);
+
+
+   });
+*/
+
+})
+
+
+
+.controller('DriverCtrl', function($scope,$http, $rootScope,$state) {
+      $scope.value={"answer":false};
+      var value=$scope.value.answer;
+      $scope.toggleChange = function() {
+      if ($scope.value == false) {
+       $scope.value = true;
+       } else
+       $scope.value = false;
+       console.log('testToggle changed to ' + $scope.value);
+       };
+
+
+            
+})
+
+
+
+
+.controller('RegisterCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+  $scope.result = "";
+       ///////////////$rootScope.hideDriverImg = true;/// in fixed image 
+      /*$http.get(API_URL + 'login').then(function(response){
+      console.log(response.data);
+      $scope.test = response.data;
+      });*/
+      $scope.user = {};
+      $scope.submitRegister = function(){
+      $ionicLoading.show();
+      console.log($scope.user);
+      $http.post( API_URL +'register',$scope.user)
+      .then(function(response){//send data from ionic to laravel then return sth
+      $ionicLoading.hide();
+      console.log("Register process Done with response of:");
+      console.log("  $scope.user.type ===="+  $scope.user.type);
+      console.log( $scope.user);
+      console.log(response.data);       
+      console.log(response.data.localeCompare("notDone")); 
+      console.log(response.data.length); 
+      var a= response.data.length;
+      if( a>5 ){
+        $scope.result = "we have already user in this email " ;
+     }else{
+        $scope.result = '';
+         $state.go('app.loginPage'); 
+     }
 
     });//fun then
 
@@ -143,17 +236,42 @@ $scope.user = {};
 .controller('HomeCtrl', function($scope,$http, $rootScope,$state) {
  $scope.goToRegisterPage=function(){
    $state.go('app.register');
-   alert(" in Fun goToRegisterPage");
+   console.log(" in Fun goToRegisterPage");
  }
  $scope.goToLoginPage=function(){
    $state.go('app.loginPage');
-   alert(" in Fun goToRegisterPage");
+   console.log(" in Fun goToRegisterPage");
  }
 
 })
 
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+  var options = {timeout: 10000, enableHighAccuracy: true};
+ 
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ 
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+ 
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+ 
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+ 
+  }, function(error){
+    console.log("Could not get location");
+  });
+})
 
 
+.controller('UserCtrl', function($scope,$http, $rootScope,$state) {
+
+
+console.log("in UserCtrl controller");
+
+})
 
 
 .controller('PlaylistsCtrl', function($scope,$http) {

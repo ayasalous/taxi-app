@@ -34,7 +34,7 @@
 <br>
    &nbsp; <font> Type User:</font> 
 <ion-list >
-  <ion-radio   id="radiocheck" ng-model="user.type"   ng-click="show=false;" ng-value="'manger'">Manger</ion-radio>
+  <ion-radio   id="radiocheck" ng-model="user.type" ng-click="show=false;" ng-value="'manger'">Manger</ion-radio>
   <ion-radio  id="radiocheck" ng-model="user.type" ng-click="show=true;"  ng-value="'driver'">Driver</ion-radio>
   <ion-radio  id="radiocheck" ng-model="user.type" ng-click="show=false;"  ng-value="'user'">User</ion-radio>
   </ion-list>
@@ -49,13 +49,13 @@
 	  </label>
 </div>
 
+<div class="padding assertive" style="font-size:18px;">
+	{{ result }}
+</div>
 
-<font style="color: red"><div id="resultregister"> </div></font>
-
-	 <center> <button id="submitButton" type="submit" class="button button-positive button-full-width">Register</button>
-	 </center>
-	</div>
-	</form>
+	 <button id="submitButton" type="submit" class="button button-positive button">Register</button>
+</div>
+</form>
 
 
 

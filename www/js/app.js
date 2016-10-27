@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -33,6 +33,30 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   })
 
 
+
+
+.state('app.browse', {
+      url: '/browse',
+
+      views: {
+        'menuContent': {
+           abstract: true,
+          templateUrl: 'templates/browse.html',
+         controller: 'BrowseCtrl'}
+      }
+    })
+
+.state('app.map', {
+    url: '/browse/map',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/map.html',
+          controller: 'MapCtrl'
+      }
+    }
+  })
+
+
 .state('app.loginPage', {
     url: '/loginPage',
     views: {
@@ -52,14 +76,52 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
+.state('app.driver', {
+    url: '/driver',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/driver.html',
+          controller: 'DriverCtrl'
       }
-    })
+    }
+  })
+
+.state('app.user', {
+    url: '/user',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/user.html',
+          controller: 'UserCtrl'
+      }
+    }
+  })
+
+
+ 
+
+.state('app.chats', {
+    url: '/chats',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/chats.html',
+          controller: 'ChatsCtrl'
+      }
+    }
+  })
+
+
+ .state('app.showDriver', {
+    url: '/showDriver',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/showDriver.html',
+        controller: 'ShowDriverCtrl'
+      }
+    }
+}) 
+
+
+
     .state('app.playlists', {
       url: '/playlists',
       views: {
@@ -90,7 +152,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
 })
- 
+
 
 
   .state('app.home', {

@@ -1,0 +1,36 @@
+<ion-view view-title="Driver Page">
+  <ion-content class="padding">
+    
+
+<div    class="list">
+    <a  id="imageup" class="item item-avatar" href="#">
+      <img src="/img/driverr.png">
+     {{genericOfficeName}}   Taxi Office 
+     <br> <h2>Welcome  manger : {{  genericFirstName}} {{genericsecondName}}  </h2>
+    </a>
+</div>
+
+
+
+ <ul class="list">
+  <li class="item item-toggle">
+  <i style="size: 90px" class="icon icon  ion-android-car ">&nbsp;&nbsp; Are you Avilable ?</i>
+     
+     <label class="toggle toggle toggle-calm">
+       <input  ng-change="toggleChange()" ng-model="value.answer" type="checkbox">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+  </li>
+</ul>
+
+
+
+<rating ng-model="rating.rate" max="rating.max"></rating>
+
+
+
+
+  </ion-content>
+</ion-view>
