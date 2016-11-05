@@ -85,39 +85,58 @@ font-family: "MenschMenschRegular";
   }
 
 
+ #map {
+        width: 100%;
+        height: 400px;
+        background-color: grey;
+      }
 .scroll {
-    height: 100%;
+  height: 100%;
 }
- 
-#map {
-    width: 100%;
-    height: 100%;
+.ionic_ratings .read_only {
+    pointer-events:none !important;
+  }
+   .ionic_ratings .icon {
+    font-size: 50px;
+  }
+
+
+map {
+  position: initial !important;
 }
 
 
+#tabcss{
+margin-top: 100px !important;
+
+}
+
+.DriverShow{
+
+width: 100% !important;
+
+}
+.tabbb{
+
+margin-bottom: 0px !important;
+}
 
 
+.mangername{
+
+position: static !important;
+width: 300px;
+border: 3px solid #21acc4;
+margin-right: 10px !important;
+margin-left: 10px !important;
+margin-top: 2px !important;
+margin-bottom:5px !important;
+}
+
+.update_delete_css{
+
+margin-right: 2px !important;
+margin-left: 2px !important;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

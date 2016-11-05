@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'starter.directives'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -47,15 +47,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     })
 
 .state('app.map', {
-    url: '/browse/map',
+    url: '/map',
     views: {
-      'tab-chats': {
+      'menuContent': {
         templateUrl: 'templates/map.html',
           controller: 'MapCtrl'
       }
     }
   })
 
+.state('app.testmap', {
+    url: '/testmap',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/testmap.html',
+          controller: 'TestmapCtrl'
+      }
+    }
+  })
 
 .state('app.loginPage', {
     url: '/loginPage',
@@ -66,12 +75,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-  .state('app.search', {
-    url: '/search',
+
+  .state('app.manger', {
+    url: '/manger',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html',
-          controller: 'MangerAddDriverCtrl'
+    'menuContent': {
+    templateUrl: 'templates/manger.html',
+    controller: 'MangerAddDriverCtrl'
       }
     }
   })
@@ -82,6 +92,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       'menuContent': {
         templateUrl: 'templates/driver.html',
           controller: 'DriverCtrl'
+      }
+    }
+  })
+
+.state('app.tab', {
+    url: '/tab',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tab.html',
+          controller: 'tabCtrl'
       }
     }
   })
@@ -120,7 +140,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
 }) 
 
+ .state('app.updatedriver', {
+    url: '/updatedriver',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/updatedriver.html',
+        controller: 'UpdatedriverCtrl'
+      }
+    }
+}) 
 
+.state('app.deleteDriver', {
+    url: '/deleteDriver',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/deleteDriver.html',
+        controller: 'deleteDriverCtrl'
+      }
+    }
+}) 
 
     .state('app.playlists', {
       url: '/playlists',

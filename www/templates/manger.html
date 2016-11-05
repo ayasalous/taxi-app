@@ -1,0 +1,114 @@
+<ion-view class="background" view-title="Manger Page">
+  <ion-content>
+
+
+
+
+  
+<div class="mangername" class="list">
+  <a id="imageup" class="item item-avatar" href="#">
+  <img src="/img/manger.png">
+  {{genericOfficeName}} Taxi Office
+  <br> <h2>Welcome   {{  genericFirstName}}  {{genericsecondName}}</h2>
+  </a>
+</div>
+
+
+<center><h4> ADD Driver</h4></center>
+
+
+<ion-scroll zooming="true" direction="y" style="width: 500px; height: 500px">
+
+<form ng-submit="MangerAddDriversubmit()">  
+  <div  class="list list-inset">
+
+  <label class="item item-input">
+    <input  type="text" placeholder="First Name" ng-model="MangerAddDriver.first" required="please you must fill this field ">
+  </label>
+
+  
+  <label class="item item-input">
+   <input   type="text" placeholder="Last Name" ng-model="MangerAddDriver.last" required="please you must fill this field ">
+  </label>
+
+<label class="item item-input">
+   <input   type="text" placeholder="Office Name" ng-model="MangerAddDriver.officename" required="please you must fill this field ">
+  </label>
+
+
+  <label class="item item-input">
+  <input  type="email" pattern="[^ @]*@[^ @]*"  placeholder="Email" ng-model="MangerAddDriver.email"
+	    required="please you must fill this field ">
+  </label>
+ 
+  <label class="item item-input">
+  <input  type="password" placeholder="Password" ng-model="MangerAddDriver.password" required="please you must fill this field "> 
+   </label>
+  
+
+	
+  <label class="item item-input">
+<input  type="number" placeholder="Mobile number " ng-model="MangerAddDriver.number" required="please you must fill this field "> 
+</label>
+
+	
+    <label class="item item-input">
+<input  type="number" placeholder="Car number " ng-model="MangerAddDriver.cardnumber" required="please you must fill this field "> 
+</label>
+</div>
+	 
+
+<input type="hidden" ng-model="genericOfficeInputHidden.nameoffice" ng-value="{{genericOfficeName}}">{{genericOfficeName}}
+
+
+<div class="padding assertive" style="font-size:18px;">
+  {{ result }}
+</div>
+
+<button id="submitButton" type="submit" class="button button-positive ion-person-add">
+ &nbsp; Add Driver
+</button>
+
+	</form>
+</ion-scroll>
+
+ <!--
+
+{{genericOfficeName}}
+
+ <button  id="submitButton" ng-click="goShowDriver()"  class="button button-positive ion-eye "> &nbsp;Show Driver</button>
+
+<ion-footer-bar class="bar-stable">
+</ion-footer-bar >
+ -->
+
+ 
+<div  class="tabs-striped tabs-color-positive"><!--positive is color blue -->
+    <div id="tabcss" class="tabs">
+      
+      <a  ng-click="goShowDriver()" class="tab-item " href="#/app/showDriver">
+        <i class="icon ion-eye"></i>
+        Show Driver
+      </a>
+      
+      <a class="tab-item active " href="#/app/manger"><!-- search ADd driver-->
+        <i class="icon ion-person-add"></i>
+        ADD Driver
+      </a>
+
+ 
+
+      <a class="tab-item" href="#/app/map">
+        <i class="icon ion-location"></i>
+        Settings
+      </a>
+
+    </div>
+</div>
+
+
+
+
+
+</ion-content>
+</ion-view>

@@ -6,24 +6,27 @@
     <title></title>
 
     <link rel="manifest" href="manifest.json">
+
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
 
 
+    
     <script src="cordova.js"></script>
-<script src="http://maps.google.com/maps/api/js?key=AIzaSyBa7ux9PvifwgKIa1MiTAcw3-XmRLIIqMw&sensor=true"></script>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-
-<!-- AngularFire -->
-<script src="https://cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-rating/ionic-rating.min.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
 
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcUToSGbecJiXNQMxlV9kuYzBBRJko6-o"></script>
 
-<script src="lib/ngCordova/dist/ng-cordova.js"></script>
-<script src="cordova.js"></script>
+<!--    
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgBjM63y07AxK3Mqovo2_Kr41Kft2C1M8"></script>
+-->
+
+
+    
+
 
 
     <!-- your app's js -->
@@ -31,9 +34,12 @@
     <script src="js/controllers.js"></script>
     <!-- becuse you save variable in services.js to use it in controller-->
     <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
   </head>
 
   <body ng-app="starter">
+
+   
 
 
     <ion-nav-view></ion-nav-view>
