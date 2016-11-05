@@ -8,15 +8,17 @@ angular.module('starter.directives', [])
     },
 
 
-    link: function ($scope, $element, $attr) { // for initializing a map to set any ceneter and zoom 
+    link: function ($scope, $element, $attr,$ionicLoading) { // for initializing a map to set any ceneter and zoom 
       // choose type for the map 
       // add Listeners look to api to understand events and listeners 
       function initialize() {
         console.log("initialize");
 
-     
 
-      
+
+
+
+
         var mapOptions = {
           center: new google.maps.LatLng(43.07493, -89.381388),
           

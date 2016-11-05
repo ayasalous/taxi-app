@@ -327,11 +327,7 @@ $state.go('app.showDriver');
 
        title: 'Hello World!'
        });//marker 
-
-
-
-
-       }, function (error) {
+           }, function (error) {
        alert('Unable to get location: ' + error.message);
        }//error
        );//getcurrent location
@@ -370,17 +366,10 @@ $state.go('app.showDriver');
        
        $scope.mapCreated = function(map) {
        $scope.map = map;
-       var locs = [  ["51.086126", "-2.210767"]]; //array that has lng and lat for 3 locations
-       //var myLatLng = {lat: -25.363, lng: 131.044};
-       for (i = 0; i < locs.length; i++) {
-       var marker="location"+i;
-       marker = new google.maps.Marker({
-       position: new google.maps.LatLng(locs[i][0], locs[i][1]),
-       map: $scope.map,
-       title: 'Hello World!'
-       }); 
-       };  
+        
        };
+      
+
        $scope.marker ;   
        $scope.map;
        $scope.centerOnMe = function () {
@@ -442,6 +431,10 @@ $state.go('app.showDriver');
 console.log("in UserCtrl controller");
 })
 
+
+.controller('BrowseCtrl', function($scope,$http, $rootScope,$state) {
+console.log("in BrowseCtrl controller");
+})
 
 .controller('PlaylistsCtrl', function($scope,$http) {
       $scope.registerUser = function(){
