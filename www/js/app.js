@@ -32,7 +32,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'starter
     controller: 'AppCtrl'
   })
 
-
+.state('app.message', {
+    url: '/message',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/message.html',
+          controller: 'Messages'
+      }
+    }
+  })
 
 
 .state('app.browse', {

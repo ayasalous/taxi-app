@@ -6,6 +6,7 @@ angular.module('starter.controllers', ['ionic.rating'] )
  //////////////////////////////////////////////////////////////////////////////// $rootScope.driverInfo={};
 
   // Create the login modal that we will use later
+
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
   }).then(function(modal) {
@@ -36,9 +37,13 @@ angular.module('starter.controllers', ['ionic.rating'] )
 
 .controller('loginPageCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
        $scope.loginData = {};//must put outside of function submit
+     
        $scope.doLogin = function() {
        console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
        console.log( $scope.loginData);
+      $rootScope.email={"emailuser":$scope.loginData.email};
+       
+    
          $ionicLoading.show();
        $http.post( API_URL +'looooginnn',$scope.loginData)
        .then(function(response){
@@ -135,7 +140,7 @@ $rootScope.resultShowDriver="";
 
 })
 
-.controller('ShowDriverCtrl', function($scope,$http, $rootScope,$state) {
+.controller('ShowDriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
   console.log("in ShowDriver  controller");
   console.log($rootScope.genericOfficeName); 
   
@@ -180,32 +185,20 @@ $state.go('app.showDriver');
     })
 
 
-.controller('UpdatedriverCtrl', function($scope,$http, $rootScope,$state) {
-  console.log("in Updatedriver controller");
-  $scope.updatePage={};
-  $scope.updateDriverFromManger=function(){
-  console.log("in updateDriverFromManger controller");
 
-
-
-
- }
-
-})
-
-.controller('deleteDriverCtrl', function($scope,$http, $rootScope,$state) {
+.controller('deleteDriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
    console.log("in deleteDriverCtrl controller");
 })
 
 
-.controller('tabCtrl', function($scope,$http, $rootScope,$state) {
+.controller('tabCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
    console.log("tab controller");
    $state.go("app.tab");
 })
 
 
 
-.controller('DriverCtrl', function($scope,$http, $rootScope,$state) {
+.controller('DriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
       $scope.value={"answer":false};
       var value=$scope.value.answer;
       $scope.toggleChange = function() {
@@ -261,7 +254,86 @@ $state.go('app.showDriver');
 })
 
 
-.controller('HomeCtrl', function($scope,$http, $rootScope,$state) {
+.controller('UpdatedriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+      console.log("in Updatedriver controller");
+      $scope.updatePage={};
+      $scope.name={};
+      $scope.updateDriverFromManger=function(){
+      
+       $scope.updatePage={"emailbeforchange":$rootScope.DriveremailName,
+       "firstname":$scope.updatePage.firstname,
+       "lastname":$scope.updatePage.lastname,
+       "email":$scope.updatePage.email,
+       "mobilenumber":$scope.updatePage.mobilenumber,
+       "carnumber":$scope.updatePage.carnumber};
+
+      var ff=((''+$scope.updatePage.firstname).length);
+      console.log("firstname"+ff);
+
+      var ll=((''+$scope.updatePage.lastname).length);
+      console.log("lastname"+ll);
+      
+      var mm=((''+$scope.updatePage.mobilenumber).length);
+      console.log("mobilenumber"+mm);
+
+      var cc=((''+$scope.updatePage.carnumber).length);
+      console.log("carnumber"+cc);
+      
+      var ee=((''+$scope.updatePage.email).length);
+      console.log("email"+ee);
+
+
+ //console.log($scope.updatePage.firstname.length);
+
+    
+      if(ff == 9){
+      console.log("empty value of first name");
+      $scope.updatePage.firstname=$rootScope.DriverFirstName;
+      }
+      if(ll == 9){
+      console.log("empty value of last name");
+      $scope.updatePage.lastname=$rootScope.DriverlastName;
+      }
+       if(ee == 9){
+      console.log("empty value of email name");
+      $scope.updatePage.email=$rootScope.DriveremailName;
+      }
+     if(mm == 9){
+      console.log("empty value of mobile name");
+      $scope.updatePage.mobilenumber=$rootScope.Driverphonenum;
+      }
+      if(cc == 9){
+      console.log("empty value of card name");
+      $scope.updatePage.carnumber=$rootScope.Drivercardnum;
+      }
+
+
+      console.log($scope.updatePage.email);
+      console.log($scope.updatePage.firstname);
+      console.log($scope.updatePage.lastname);
+      console.log($scope.updatePage.mobilenumber);
+      console.log($scope.updatePage.carnumber);
+      
+
+      $ionicLoading.show();
+      $http.post(API_URL+'MangerUpdateDriver', $scope.updatePage)
+      .then(function(response){//send data from ionic to laravel then return sth
+      $ionicLoading.hide();
+      console.log(response.data); 
+      var a= response.data.length;
+      if( a>5 ){
+        $scope.result = "we have already user in this email " ;
+      }else{
+        $scope.result = '';
+         //$state.go('app.loginPage'); 
+      }
+
+    });//fun then
+
+}
+ 
+})
+.controller('HomeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
  $scope.goToRegisterPage=function(){
    $state.go('app.register');
    console.log(" in Fun goToRegisterPage");
@@ -291,14 +363,142 @@ $state.go('app.showDriver');
 
 
 
-.controller('MapCtrl', function($scope, $ionicLoading) {
+.controller('MapCtrl', function($scope,$http, $rootScope,$state,$ionicLoading){
        console.log("Centering");
+      $rootScope.lati={};
+      $rootScope.long={};
+      $rootScope.aya={};
+      $rootScope.GeolocationDriver={};
+      $rootScope.GeolocationUser={};
+      $rootScope.GeolocationManger={};
+       $rootScope.tracking={};
        $scope.mapCreated = function(map) {
        $scope.map = map;
        };//function 
 
 
 
+
+   navigator.geolocation.getCurrentPosition(
+       function (pos) {
+       console.log('Got pos', pos);///
+       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      
+       $rootScope.tracking={"lati":pos.coords.latitude,
+                            "long":pos.coords.longitude,
+                            "emailuser":$rootScope.email};
+console.log($rootScope.tracking.emailuser);
+       console.log("tracking data is "+$rootScope.tracking.lati);
+       console.log("tracking data is "+$rootScope.tracking.long);
+       console.log(pos.coords.latitude);
+       console.log(pos.coords.longitude);
+      console.log($rootScope.email);//take email from loginCTL
+
+/////////////////////////////////////////////// Save In DataBase /Lati ,Long ////////////////////
+       $http.post( API_URL +'tracking',$rootScope.tracking)
+       .then(function(response){//send data from ionic to laravel then return sth
+       console.log( "save in DB");
+       console.log(response.data);       
+       });//fun then
+
+       $ionicLoading.hide();
+       $rootScope.aya="ayaaaaaaaaaa";
+       $rootScope.lati=pos.coords.latitude;
+       $rootScope.long=pos.coords.longitude
+       var image ="/img/bluesize.png";
+       console.log("$rootScope.lati iiiiiiiiiiiiiiiis "+$rootScope.lati);
+
+       ////////////Take All Geolocation (Drivers) From DB///////////
+
+       $http.get(API_URL + 'getGeolocationDriver').then(function(response){
+       console.log("Driver geolocation "+response.data);
+       console.log(response.data);
+       $rootScope.GeolocationDriver = response.data;
+       for(var i=0;i<response.data.length;i++){
+       console.log($rootScope.GeolocationDriver [i]['trackLati']);
+       console.log( $rootScope.GeolocationDriver [i]['trackLong']);
+       ///////Put Marker
+        var imagedriver="/img/taxi4.png";
+       marker = new google.maps.Marker({
+       position: new google.maps.LatLng($rootScope.GeolocationDriver[i]['trackLati'],$rootScope.GeolocationDriver [i]['trackLong']),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+       icon: imagedriver,
+       title: 'Hello World!'
+       });//marker   
+       }
+       
+       });
+       /////////////////////////////////////////////////////////////////
+       ////////////Take All Geolocation (Users) From DB///////////
+
+       $http.get(API_URL + 'getGeolocationUser').then(function(response){
+       console.log("Driver geolocation "+response.data);
+       console.log(response.data);
+       $rootScope.GeolocationUser = response.data;
+       for(var i=0;i<response.data.length;i++){
+       console.log($rootScope.GeolocationUser[i]['trackLati']);
+       console.log($rootScope.GeolocationUser[i]['trackLong']);
+       ///////Put Marker
+        var imageuser="/img/markeruser.png";
+       marker = new google.maps.Marker({
+       position: new google.maps.LatLng($rootScope.GeolocationUser[i]['trackLati'], $rootScope.GeolocationUser[i]['trackLong']),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+       icon: imageuser,
+       title: 'Hello World!'
+       });//marker   
+       }
+       
+       });
+       /////////////////////////////////////////////////////////////////
+        ////////////Take All Geolocation (Users) From DB///////////
+
+       $http.get(API_URL + 'getGeolocationManger').then(function(response){
+       console.log("Driver geolocation "+response.data);
+       console.log(response.data);
+       $rootScope.GeolocationManger= response.data;
+       for(var i=0;i<response.data.length;i++){
+       console.log($rootScope.GeolocationDriver[i]['trackLati']);
+       console.log( $rootScope.GeolocationDriver[i]['trackLong']);
+       ///////Put Marker
+        var imagemanger="/img/markermanger.png";
+       marker = new google.maps.Marker({
+       position: new google.maps.LatLng($rootScope.GeolocationManger[i]['trackLati'], $rootScope.GeolocationManger[i]['trackLong']),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+       icon: imagemanger,
+       title: 'Hello World!'
+       });//marker   
+       }
+       
+       });
+       /////////////////////////////////////////////////////////////////
+       /*
+       marker = new google.maps.Marker({
+       position: new google.maps.LatLng($rootScope.lati,  $rootScope.long),//32.2197215, 35.2755521),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+                   icon: image,
+       title: 'Hello World!'
+       });//marker 
+           
+///////////
+marker = new google.maps.Marker({
+       position: new google.maps.LatLng( 31.76832, 35.21371),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+                   icon: image,
+       title: 'Hello World!'
+       });//marker 
+*/
+       }, function (error) {
+       alert('Unable to get location: ' + error.message);
+       }//error
+       );//getcurrent location
+///////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////// Center Me /////////////////////////////////
        $scope.centerOnMe = function () {
        console.log("Centering");
        if (!$scope.map) {
@@ -312,14 +512,14 @@ $state.go('app.showDriver');
       navigator.geolocation.getCurrentPosition(
        function (pos) {
        console.log('Got pos', pos);///
-       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));//32.2197215, 35.2755521));
        $ionicLoading.hide();
 
-      var lati=pos.coords.latitude;
-      var long=pos.coords.longitude
-      var image ="/img/bluesize.png";
+       $rootScope.lati=pos.coords.latitude;
+       $rootScope.long=pos.coords.longitude
+       var image ="/img/bluesize.png";
        marker = new google.maps.Marker({
-       position: new google.maps.LatLng(lati, long),
+       position: new google.maps.LatLng($rootScope.lati, $rootScope.long),//32.2197215, 35.2755521),
        map: $scope.map,
        animation: google.maps.Animation.DROP,
                    icon: image,
@@ -331,17 +531,11 @@ $state.go('app.showDriver');
        alert('Unable to get location: ' + error.message);
        }//error
        );//getcurrent location
-
+console.log("at end of function "+$rootScope.lati,$rootScope.long);
 
         };//function
 
-
-
-
-
-
-
-
+console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
 
 
 })
@@ -364,71 +558,13 @@ $state.go('app.showDriver');
 .controller('TestmapCtrl', function($scope, $ionicLoading) {
        console.log("Centering");
        
-       $scope.mapCreated = function(map) {
-       $scope.map = map;
-        
-       };
-      
-
-       $scope.marker ;   
-       $scope.map;
-       $scope.centerOnMe = function () {
-       console.log("Centering");
-       if (!$scope.map) {
-       return;
-       }
-       $ionicLoading.show({
-       content: 'Getting current location...',
-       showBackdrop: false
-       });
-       navigator.geolocation.getCurrentPosition(
-       function (pos) {
-       console.log('Got pos', pos);///
-       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-       
-
-
-
-
-       $scope.marker = new google.maps.Marker({
-       position: new google.maps.LatLng($scope.lat, $scope.long),
-       map: $scope.map,
-       title: 'Holas!'
-       }, function(err) {
-       console.err(err);
-       });
-       $ionicLoading.hide();
-    
-       
-
-
-
-
-       }, function (error) {
-       alert('Unable to get location: ' + error.message);
-       }
-       );//getposuotion
-       };
-
- /*$scope.gatAddress=function(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-*/
 })
 
 .controller('UserCtrl', function($scope,$http, $rootScope,$state) {
 console.log("in UserCtrl controller");
+
+
+
 })
 
 

@@ -10,73 +10,77 @@
   </a>
 </div>
 
-{{DriverFirstName}}
-{{DriverlastName}}
-{{DriveremailName}}
-{{Driverphonenum}}
-{{Drivercardnum}}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
 
 
 <form ng-submit="updateDriverFromManger()">  
-    <div class="list">
+    <div  class="list list-inset">
+
 	 
 	   <label  class="item item-input item-floating-label">
     <span class="input-label">First Name</span>
-    <input id="input" type="text" placeholder="First Name" ng-model="updatePage.first" required="please you must fill this field ">
+    <input id="input" type="text" placeholder=""  ng-model="updatePage.firstname" >{{DriverFirstName}}
+
+    
+ <!-- 
+ <span ng-bind="updatePage.firstname"></span>  
+
+<span ng-modle="firstname.firstnamee"></span>
+  
+<input type="hidden" name="firstname" ng-init="firstname={{DriverFirstName}};" ng-value="firstname"/>
+
+  -->
+     
+
+
+
+
+
   </label>
 	 
 	  <label   class="item item-input item-floating-label">
 	    <span class="input-label">Last Name</span>
-	    <input  id="input" type="text" placeholder="Last Name" ng-model="updatePage.last" required="please you must fill this field ">
+	    <input  id="input" type="text" placeholder=""  ng-model="updatePage.lastname" >{{DriverlastName}}
+	 
 	  </label>
 	 
 	  <label class="item item-input item-floating-label">
 	    <span class="input-label">Email</span>
-	    <input id="input" type="email" pattern="[^ @]*@[^ @]*"  placeholder="Email" ng-model="updatePage.email"
-	    required="please you must fill this field ">
+	    <input id="input" type="email" pattern="[^ @]*@[^ @]*"  placeholder="" ng-model="updatePage.email">{{DriveremailName}}
+	 
 	  </label>
 	  
-	  <label class="item item-input item-floating-label">
+<!--
+        <label class="item item-input item-floating-label">
 	    <span class="input-label">Password</span>
 	    <input id="input" type="password" placeholder="Password" ng-model="updatePage.password" required="please you must fill this field ">
 	  </label>
-
+--> 
 <label class="item item-input item-floating-label">
 	    <span class="input-label">Mobile Number</span>
-	    <input id="input" type="number" placeholder="Mobile number " ng-model="updatePage.number" required="please you must fill this field ">
-	  </label>
+	    <input id="input" type="tel" placeholder=""  ng-model="updatePage.mobilenumber" >  {{Driverphonenum}}
+</label>
 
 
-	 <button id="submitButton" type="submit" class="button button-positive button">Register</button>
+
+<label class="item item-input item-floating-label">
+	    <span class="input-label">card Number</span>
+	    <input id="input" type="number" placeholder=""   ng-model="updatePage.carnumber" >  {{Drivercardnum}}
+
+</label>
+
+
+
+
+
 </div>
-</form>
 
-
-
--->
-
-
+<div class="padding assertive" style="font-size:18px;">
+  {{ result }}
+</div>
+	 <button id="submitButton" type="submit" class="button button-positive button">Update</button>
+	 </form>
 
 
 

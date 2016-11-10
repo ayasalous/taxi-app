@@ -67,6 +67,25 @@ background: rgba(179,220,237,1);
 #imageup{
 
 background:white ;
+
+}
+#image{
+width: 1px !important;
+
+
+}
+#imageupDriverPage{
+
+background:white ;
+width: 280px !important;
+}
+
+#toggleDriverPage{
+
+background:white ;
+width: 60px !important;
+margin-top: 13px !important;
+
 }
 #divHomePage{
 margin-left: 17px !important;
@@ -132,11 +151,50 @@ margin-left: 10px !important;
 margin-top: 2px !important;
 margin-bottom:5px !important;
 }
+.showDriver{
+
+position: static !important;
+width: 285px;
+border: 3px solid #21acc4;
+margin-right:15px !important;
+margin-left: 6px !important;
+margin-top: 0px !important;
+margin-bottom:10px !important;
+}
+
+
+.drivername{
+
+position: static !important;
+width: 300px;
+border: 3px solid #21acc4;
+margin-right:20px !important;
+margin-left: 2px !important;
+margin-top: 2px !important;
+margin-bottom:20px !important;
+}
+.username{
+
+position: static !important;
+width: 300px;
+
+border: 3px solid #21acc4;
+margin-right:20px !important;
+margin-left: 2px !important;
+margin-top: 0px !important;
+margin-bottom:3px !important;
+}
+
 
 .update_delete_css{
 
 margin-right: 2px !important;
 margin-left: 2px !important;
+
+
+}
+#toggle{
+margin-top: 30px !important;
 
 
 }

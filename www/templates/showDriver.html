@@ -15,48 +15,42 @@
 
 
 
-<div class="mangername" class="list">
+  <div class="mangername" class="list">
 
-<h1>{{resultShowDriver}}</h1>  
-    <div data-ng-repeat="driver in driversname ">
-
-  <div  class="item item-button-right">  
+  <h1>{{resultShowDriver}}</h1>  
+  <div data-ng-repeat="driver in driversname ">
+  <div class="showDriver" class="item item-button-right">  
   <a class="item item-avatar" href="">
   <img src="/img/driver.png">
   <p>Driver Name :</p>
-  <br>
-  
-  <h2>{{driver.firstname}}</h2>
-  &nbsp;
-  <!--<h2 ng-model="driverInfo.driverfirstname" >{{driver.firstname}}</h2>-->
-  
-  <h2>{{driver.lastname}}</h2>
+  <h2>{{driver.firstname}} &nbsp; {{driver.lastname}}</h2>
   <p>Email:<br>
-
-&nbsp;
-  <h2>
-  {{driver.email}}</h2> </p>
+  <h2>{{driver.email}}</h2> </p>
   <p>Phone Number:<br>
-  
   <h2>&nbsp; {{driver.phonenum}}</h2></p>
   <p>Car Number:<br>
-  
   <h2>&nbsp;{{driver.cardnum}}</h2></p>
   </a>
-
-
-   <div class="item item-input-inset">
-
-
+  <div class="item item-input-inset">
 
    <button  ng-click="updatedriver(driver)"  class="button button-positive">
    Update 
+   <br>
+   <i class="icon ion-person"></i>
    </button>
-  &nbsp;&nbsp;
-   <button  ng-click="deletedriver(driver)"  class="button button-positive"> 
+   &nbsp;
+  
+   <button  ng-click="     "  class="button button-positive"> 
    Delete 
+   <br> <i class="icon ion-trash-b"></i>
    </button>
+   &nbsp;
    
+   <button  ng-click="deletedriver(driver)"  class="button button-positive"> 
+   Conversation 
+   <br><i class="icon ion-chatboxes"></i>
+   </button>
+
    </div>
 
   </div>
