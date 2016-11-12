@@ -414,16 +414,46 @@ console.log($rootScope.tracking.emailuser);
        console.log("$rootScope.lati iiiiiiiiiiiiiiiis "+$rootScope.lati);
 
        ////////////Take All Geolocation (Drivers) From DB///////////
-
+ 
        $http.get(API_URL + 'getGeolocationDriver').then(function(response){
        console.log("Driver geolocation "+response.data);
        console.log(response.data);
+ 
+     
+ /*
+
+       var imagedriver="";
+       if ($rootScope.LoginData[10]=='madina'){
+       console.log("madinaaaaaaaaaaaaaaaaaaaaaaa icooooooon imagggeeeeeeeeeeeee");
+       imagedriver="/img/madina.png";
+       }
+       else{
+       console.log("not madina icooooooon imagggeeeeeeeeeeeee");
+       imagedriver="/img/taxi4.png";
+       }
+       console.log(imagedriver);
+       */
+      
+
        $rootScope.GeolocationDriver = response.data;
        for(var i=0;i<response.data.length;i++){
+       
+       var imagedriver="";
+       if ($rootScope.GeolocationDriver [i]['nameoffice']=='madina'){
+       console.log("madinaaaaaaaaaaaaaaaaaaaaaaa icooooooon imagggeeeeeeeeeeeee");
+       imagedriver="/img/madina.png";
+       }
+       else{
+       console.log("not madina icooooooon imagggeeeeeeeeeeeee");
+       imagedriver="/img/taxi4.png";
+       }
+       console.log(imagedriver);
        console.log($rootScope.GeolocationDriver [i]['trackLati']);
        console.log( $rootScope.GeolocationDriver [i]['trackLong']);
+
        ///////Put Marker
-        var imagedriver="/img/taxi4.png";
+       //imagedriver="/img/taxi4.png";
+       console.log(imagedriver);
        marker = new google.maps.Marker({
        position: new google.maps.LatLng($rootScope.GeolocationDriver[i]['trackLati'],$rootScope.GeolocationDriver [i]['trackLong']),
        map: $scope.map,
@@ -474,13 +504,28 @@ console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee driver of manger");
        
        ///////Put Marker
         var imageuser="/img/markeruser.png";
+
+        //Write msg in top of marker 
+
+         /*var contentString = 'Hiiii User';
+
+       InfoWindow.setPosition(new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'],
+        $rootScope.GeolocationAllUser[i]['trackLong']));
+        InfoWindow.setContent(contentString);
+        map.setCenter(new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'],
+        $rootScope.GeolocationAllUser[i]['trackLong']));
+*/
        marker = new google.maps.Marker({
-       position: new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'], $rootScope.GeolocationAllUser[i]['trackLong']),
+       position: new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'],
+        $rootScope.GeolocationAllUser[i]['trackLong']),
        map: $scope.map,
        animation: google.maps.Animation.DROP,
        icon: imageuser,
        title: 'Hello World!'
        });//marker   
+       //on click on
+      
+
        }//for User
        
        });
