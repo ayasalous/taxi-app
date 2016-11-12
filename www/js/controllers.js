@@ -37,7 +37,7 @@ angular.module('starter.controllers', ['ionic.rating'] )
 
 .controller('loginPageCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
        $scope.loginData = {};//must put outside of function submit
-     
+     $rootScope.LoginData={};
        $scope.doLogin = function() {
        console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
        console.log( $scope.loginData);
@@ -50,6 +50,10 @@ angular.module('starter.controllers', ['ionic.rating'] )
          $ionicLoading.hide();
        console.log("Register process Done with response of:");
        console.log(response.data);
+
+        $rootScope.LoginData=response.data;//Array
+        console.log("login dataaaaaaaaaaaaaaaaaa");
+console.log($rootScope.LoginData);
         console.log(response.data.length);
 
       
@@ -371,6 +375,7 @@ $state.go('app.showDriver');
       $rootScope.GeolocationDriver={};
       $rootScope.GeolocationUser={};
       $rootScope.GeolocationManger={};
+       $rootScope.GeolocationAllUser={};
        $rootScope.tracking={};
        $scope.mapCreated = function(map) {
        $scope.map = map;
@@ -430,15 +435,87 @@ console.log($rootScope.tracking.emailuser);
        
        });
        /////////////////////////////////////////////////////////////////
-       ////////////Take All Geolocation (Users) From DB///////////
+       ////////////Take spasific user Geolocation (Users) From DB///////////
 
-       $http.get(API_URL + 'getGeolocationUser').then(function(response){
+
+if ( $rootScope.LoginData[8]=='user'){
+       $http.post( API_URL +'getGeolocationUser',$rootScope.email)
+       .then(function(response){//send data from ionic to laravel then return sth
+       console.log( "save in DB");
+       console.log(response.data);       
+        $rootScope.GeolocationUser = response.data;
+       var imageuser="/img/markeruser.png";
+       marker = new google.maps.Marker({
+       position: new google.maps.LatLng($rootScope.GeolocationUser[0]['trackLati'], $rootScope.GeolocationUser[0]['trackLong']),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+       icon: imageuser,
+       title: 'Hello World!'
+       });//marker   
+      
+
+       });//fun then
+
+
+}else{
+console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee driver of manger");
+       $http.get(API_URL + 'getGeolocationAllUser').then(function(response){
+       console.log("Driver geolocation "+response.data);
+       console.log(response.data);
+       $rootScope.GeolocationAllUser = response.data;
+       for(var i=0;i<response.data.length;i++){
+       console.log($rootScope.GeolocationAllUser[i]['trackLati']);
+       console.log($rootScope.GeolocationAllUser[i]['trackLong']);
+       console.log("emailllllllllllllll  ");
+       console.log($rootScope.GeolocationAllUser[i]['email']);
+       console.log("loginnnnnnnnnnn userrrrrrrrrrr to teeeeeeest   ");
+       console.log($rootScope.email);
+       
+       
+       ///////Put Marker
+        var imageuser="/img/markeruser.png";
+       marker = new google.maps.Marker({
+       position: new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'], $rootScope.GeolocationAllUser[i]['trackLong']),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+       icon: imageuser,
+       title: 'Hello World!'
+       });//marker   
+       }//for User
+       
+       });
+
+
+
+}//else
+ 
+
+
+
+
+     /*
+     To show all user  YOU MUST Delete*********************************
+      $http.get(API_URL + 'getGeolocationUser').then(function(response){
        console.log("Driver geolocation "+response.data);
        console.log(response.data);
        $rootScope.GeolocationUser = response.data;
        for(var i=0;i<response.data.length;i++){
        console.log($rootScope.GeolocationUser[i]['trackLati']);
        console.log($rootScope.GeolocationUser[i]['trackLong']);
+       console.log("emailllllllllllllll  ");
+       console.log($rootScope.GeolocationUser[i]['email']);
+       console.log("loginnnnnnnnnnn userrrrrrrrrrr to teeeeeeest   ");
+       console.log($rootScope.email);
+       
+       var result=angular.equals($rootScope.GeolocationUser[i]['email'], $rootScope.email.emailuser)
+}
+
+console.log("resullllllllllllllt isssssssssssss======"+result);
+       if ($rootScope.GeolocationUser[i]['email'] ==  $rootScope.tracking.emailuser){
+
+console.log("ssssssssssssssssssssssssssssssssssssssame email");
+       }
+      
        ///////Put Marker
         var imageuser="/img/markeruser.png";
        marker = new google.maps.Marker({
@@ -448,19 +525,21 @@ console.log($rootScope.tracking.emailuser);
        icon: imageuser,
        title: 'Hello World!'
        });//marker   
-       }
+       }//for User
        
        });
+*/
+
        /////////////////////////////////////////////////////////////////
-        ////////////Take All Geolocation (Users) From DB///////////
+        ////////////Take All Geolocation (Manger) From DB///////////
 
        $http.get(API_URL + 'getGeolocationManger').then(function(response){
        console.log("Driver geolocation "+response.data);
        console.log(response.data);
        $rootScope.GeolocationManger= response.data;
        for(var i=0;i<response.data.length;i++){
-       console.log($rootScope.GeolocationDriver[i]['trackLati']);
-       console.log( $rootScope.GeolocationDriver[i]['trackLong']);
+       console.log($rootScope.GeolocationManger[i]['trackLati']);
+       console.log( $rootScope.GeolocationManger[i]['trackLong']);
        ///////Put Marker
         var imagemanger="/img/markermanger.png";
        marker = new google.maps.Marker({
