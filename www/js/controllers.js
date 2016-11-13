@@ -414,30 +414,12 @@ console.log($rootScope.tracking.emailuser);
        console.log("$rootScope.lati iiiiiiiiiiiiiiiis "+$rootScope.lati);
 
        ////////////Take All Geolocation (Drivers) From DB///////////
- 
        $http.get(API_URL + 'getGeolocationDriver').then(function(response){
        console.log("Driver geolocation "+response.data);
        console.log(response.data);
- 
-     
- /*
-
-       var imagedriver="";
-       if ($rootScope.LoginData[10]=='madina'){
-       console.log("madinaaaaaaaaaaaaaaaaaaaaaaa icooooooon imagggeeeeeeeeeeeee");
-       imagedriver="/img/madina.png";
-       }
-       else{
-       console.log("not madina icooooooon imagggeeeeeeeeeeeee");
-       imagedriver="/img/taxi4.png";
-       }
-       console.log(imagedriver);
-       */
-      
-
        $rootScope.GeolocationDriver = response.data;
-       for(var i=0;i<response.data.length;i++){
        
+       for(var i=0;i<response.data.length;i++){
        var imagedriver="";
        if ($rootScope.GeolocationDriver [i]['nameoffice']=='madina'){
        console.log("madinaaaaaaaaaaaaaaaaaaaaaaa icooooooon imagggeeeeeeeeeeeee");
@@ -447,28 +429,43 @@ console.log($rootScope.tracking.emailuser);
        console.log("not madina icooooooon imagggeeeeeeeeeeeee");
        imagedriver="/img/taxi4.png";
        }
+
        console.log(imagedriver);
        console.log($rootScope.GeolocationDriver [i]['trackLati']);
        console.log( $rootScope.GeolocationDriver [i]['trackLong']);
-
        ///////Put Marker
-       //imagedriver="/img/taxi4.png";
        console.log(imagedriver);
-       marker = new google.maps.Marker({
-       position: new google.maps.LatLng($rootScope.GeolocationDriver[i]['trackLati'],$rootScope.GeolocationDriver [i]['trackLong']),
-       map: $scope.map,
-       animation: google.maps.Animation.DROP,
-       icon: imagedriver,
-       title: 'Hello World!'
-       });//marker   
-       }
+      marker = new google.maps.Marker({
+      position: new google.maps.LatLng($rootScope.GeolocationDriver[i]['trackLati'],$rootScope.GeolocationDriver [i]['trackLong']),
+      map: $scope.map,
+      animation: google.maps.Animation.DROP,
+      icon: imagedriver,
+      title: 'Hello World!'
+      });//marker
+      ///////////////////// To Set Msg IN Marker ////////////////////////////
+       var driveruser="driver"+" "+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+$rootScope.GeolocationDriver[i]['phonenum'];
+       attachSecretMessage(marker, driveruser);
+       }//for
        
+       function attachSecretMessage(marker, driveruser) {
+       var infowindow = new google.maps.InfoWindow({
+       content: driveruser
        });
-       /////////////////////////////////////////////////////////////////
+       marker.addListener('click', function() {
+       infowindow.open($scope.map, marker);
+       });
+       }//function
+       /////////////////////////////////////////////
+
+
+      });//get   
+
+
+    /////////////////////////////////////////////////////////////////
        ////////////Take spasific user Geolocation (Users) From DB///////////
 
 
-if ( $rootScope.LoginData[8]=='user'){
+if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all user by this if statement 
        $http.post( API_URL +'getGeolocationUser',$rootScope.email)
        .then(function(response){//send data from ionic to laravel then return sth
        console.log( "save in DB");
@@ -481,14 +478,23 @@ if ( $rootScope.LoginData[8]=='user'){
        animation: google.maps.Animation.DROP,
        icon: imageuser,
        title: 'Hello World!'
-       });//marker   
-      
+       });//marker  
+       ///////////////////// To Set Msg IN Marker ////////////////////////////
+       var user="User"+" "+$rootScope.GeolocationUser[0]['firstname']+'<br>'+$rootScope.GeolocationUser[0]['phonenum'];
+       attachSecretMessage(marker, user);
+       function attachSecretMessage(marker, user) {
+       var infowindow = new google.maps.InfoWindow({
+       content:user
+       });
+       marker.addListener('click', function() {
+       infowindow.open($scope.map, marker);
+       });
+       }
+       /////////////////////////////////////////////
 
        });//fun then
-
-
-}else{
-console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee driver of manger");
+}else{//if driver of manger login then show all user in the Map
+       console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee if driver of manger login then show all user in the Map");
        $http.get(API_URL + 'getGeolocationAllUser').then(function(response){
        console.log("Driver geolocation "+response.data);
        console.log(response.data);
@@ -500,41 +506,80 @@ console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee driver of manger");
        console.log($rootScope.GeolocationAllUser[i]['email']);
        console.log("loginnnnnnnnnnn userrrrrrrrrrr to teeeeeeest   ");
        console.log($rootScope.email);
-       
-       
        ///////Put Marker
         var imageuser="/img/markeruser.png";
-
-        //Write msg in top of marker 
-
-         /*var contentString = 'Hiiii User';
-
-       InfoWindow.setPosition(new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'],
-        $rootScope.GeolocationAllUser[i]['trackLong']));
-        InfoWindow.setContent(contentString);
-        map.setCenter(new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'],
-        $rootScope.GeolocationAllUser[i]['trackLong']));
-*/
-       marker = new google.maps.Marker({
-       position: new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'],
+        marker = new google.maps.Marker({
+        position: new google.maps.LatLng($rootScope.GeolocationAllUser[i]['trackLati'],
         $rootScope.GeolocationAllUser[i]['trackLong']),
-       map: $scope.map,
-       animation: google.maps.Animation.DROP,
-       icon: imageuser,
-       title: 'Hello World!'
-       });//marker   
-       //on click on
-      
-
-       }//for User
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        icon: imageuser,
+        title: 'Hello World!'
+        });//marker   
+       ///////////////////// To Set Msg IN Marker ////////////////////////////
+       var Alluser="User"+" "+$rootScope.GeolocationAllUser[i]['firstname']+'<br>'+$rootScope.GeolocationAllUser[i]['phonenum'];
+       attachSecretMessage(marker, Alluser);
+       }//for
        
+       function attachSecretMessage(marker, Alluser) {
+       var infowindow = new google.maps.InfoWindow({
+       content: Alluser
        });
-
-
-
+       marker.addListener('click', function() {
+       infowindow.open($scope.map, marker);
+       });
+       }
+       /////////////////////////////////////////////
+        });//get
 }//else
  
 
+/////////////////////////////////////////////////////////////////
+        ////////////Take All Geolocation (Manger) From DB///////////
+
+       $http.get(API_URL + 'getGeolocationManger').then(function(response){
+       console.log("Driver geolocation "+response.data);
+       console.log(response.data);
+       $rootScope.GeolocationManger= response.data;
+       
+        for(var i=0;i<response.data.length;i++){
+       console.log($rootScope.GeolocationManger[i]['trackLati']);
+       console.log( $rootScope.GeolocationManger[i]['trackLong']);
+       ///////Put Marker
+       var imagemanger="/img/markermanger.png";
+       
+       
+       marker = new google.maps.Marker({
+       position: new google.maps.LatLng($rootScope.GeolocationManger[i]['trackLati'], $rootScope.GeolocationManger[i]['trackLong']),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+       icon: imagemanger,
+       title: 'Hello World!'
+       });//marker
+
+       var manger="Manger"+" "+$rootScope.GeolocationManger[i]['firstname']+'<br>'+$rootScope.GeolocationManger[i]['phonenum'];
+       attachSecretMessage(marker, manger);
+       }//for
+       
+function attachSecretMessage(marker, manger) {
+        var infowindow = new google.maps.InfoWindow({
+          content: manger
+        });
+
+        marker.addListener('click', function() {
+          infowindow.open($scope.map, marker);
+        });
+      }
+
+
+
+       });//get
+
+       }, function (error) {
+       alert('Unable to get location: ' + error.message);
+       }//error
+       );//getcurrent location
+///////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -575,52 +620,7 @@ console.log("ssssssssssssssssssssssssssssssssssssssame email");
        });
 */
 
-       /////////////////////////////////////////////////////////////////
-        ////////////Take All Geolocation (Manger) From DB///////////
-
-       $http.get(API_URL + 'getGeolocationManger').then(function(response){
-       console.log("Driver geolocation "+response.data);
-       console.log(response.data);
-       $rootScope.GeolocationManger= response.data;
-       for(var i=0;i<response.data.length;i++){
-       console.log($rootScope.GeolocationManger[i]['trackLati']);
-       console.log( $rootScope.GeolocationManger[i]['trackLong']);
-       ///////Put Marker
-        var imagemanger="/img/markermanger.png";
-       marker = new google.maps.Marker({
-       position: new google.maps.LatLng($rootScope.GeolocationManger[i]['trackLati'], $rootScope.GeolocationManger[i]['trackLong']),
-       map: $scope.map,
-       animation: google.maps.Animation.DROP,
-       icon: imagemanger,
-       title: 'Hello World!'
-       });//marker   
-       }
        
-       });
-       /////////////////////////////////////////////////////////////////
-       /*
-       marker = new google.maps.Marker({
-       position: new google.maps.LatLng($rootScope.lati,  $rootScope.long),//32.2197215, 35.2755521),
-       map: $scope.map,
-       animation: google.maps.Animation.DROP,
-                   icon: image,
-       title: 'Hello World!'
-       });//marker 
-           
-///////////
-marker = new google.maps.Marker({
-       position: new google.maps.LatLng( 31.76832, 35.21371),
-       map: $scope.map,
-       animation: google.maps.Animation.DROP,
-                   icon: image,
-       title: 'Hello World!'
-       });//marker 
-*/
-       }, function (error) {
-       alert('Unable to get location: ' + error.message);
-       }//error
-       );//getcurrent location
-///////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////// Center Me /////////////////////////////////
        $scope.centerOnMe = function () {
