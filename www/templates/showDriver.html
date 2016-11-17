@@ -40,17 +40,13 @@
    </button>
    &nbsp;
   
-   <button  ng-click="     "  class="button button-positive"> 
+   <button  ng-click="deletedriver(driver)"  class="button button-positive"> 
    Delete 
    <br> <i class="icon ion-trash-b"></i>
    </button>
    &nbsp;
    
-   <button  ng-click="deletedriver(driver)"  class="button button-positive"> 
-   Conversation 
-   <br><i class="icon ion-chatboxes"></i>
-   </button>
-
+  
    </div>
 
   </div>
@@ -65,48 +61,35 @@
 
 
 
- <div   class="tabs-striped tabs-color-positive">
+<div  class="tabs tabs-icon-top  tabs-color-positive"><!--positive is color blue ,,,,,,,tabs-striped No name -->
     <div id="tabcss" class="tabs">
       
-      <a class="tab-item active" href="#/app/showDriver">
+      <a  ng-click="goShowDriver()" class="tab-item active" href="#/app/showDriver">
         <i class="icon ion-eye"></i>
         Show Driver
       </a>
       
-       <a class="tab-item  " href="#/app/manger">
+      <a class="tab-item  " href="#/app/manger"><!-- search ADd driver-->
         <i class="icon ion-person-add"></i>
         ADD Driver
       </a>
 
+ 
+    <a  class="tab-item " href="#/app/mangerCheckADDChilde">
+      <i class="icon ion-android-contacts" ></i>
+      Check ADD Children
+     </a>
+
+     
+
       <a class="tab-item" href="#/app/map">
         <i class="icon ion-location"></i>
-       Map
+        Map
       </a>
 
     </div>
 </div>
 
 
-
-
-
-<!--
-
-<div class="tabs tabs-background-positive tabs-icon-left">
-  <a class="tab-item">
-    <i class="icon ion-home"></i>
-    Home
-  </a>
-  <a class="tab-item">
-    <i class="icon ion-star"></i>
-    Favorites
-  </a>
-  <a class="tab-item">
-    <i class="icon ion-gear-a"></i>
-    Settings
-  </a>
-</div>
-
- -->
   </ion-content>
 </ion-view>

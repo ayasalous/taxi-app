@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ionic.rating'] )
+angular.module('starter.controllers', ['ionic.rating','ionic-modal-select'] )
 
 .controller('AppCtrl', function($scope,$rootScope, $ionicModal, $timeout,$rootScope,$http,$location,$state,$window) {
   console.log('123');
@@ -200,27 +200,39 @@ $state.go('app.showDriver');
    $state.go("app.tab");
 })
 
-
-
 .controller('DriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
       $scope.value={"answer":false};
-      var value=$scope.value.answer;
+      $scope.tt={};
+      var value=$scope.value;
       $scope.toggleChange = function() {
       if ($scope.value == false) {
        $scope.value = true;
        } else
        $scope.value = false;
-       console.log('testToggle changed to ' + $scope.value);
+
+         $scope.tt={"aa":$scope.value,
+                             "email":$rootScope.email.emailuser};
+       console.log('testToggle changed to ' + $scope.value); 
+       console.log( $scope.tt); 
+
+         $http.post( API_URL +'checkAvilableDriver',$scope.tt)
+      .then(function(response){
+      console.log(response.data);
+       });
+
+
        };
+/// http-post 
+  ///// to stor it in data
+
+    
+
        $scope.readOnly = false;//can choose in rating 
        $scope.rating = {};
        $scope.rating.rate = 1;//defult value
        $scope.rating.max = 5;//number of Star Rating
        console.log($scope.rating.max);
 })
-
-
-
 
 .controller('RegisterCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
   $scope.result = "";
@@ -397,10 +409,10 @@ console.log($rootScope.tracking.emailuser);
        console.log("tracking data is "+$rootScope.tracking.long);
        console.log(pos.coords.latitude);
        console.log(pos.coords.longitude);
-      console.log($rootScope.email);//take email from loginCTL
+       console.log($rootScope.email);//take email from loginCTL
 
 /////////////////////////////////////////////// Save In DataBase /Lati ,Long ////////////////////
-       $http.post( API_URL +'tracking',$rootScope.tracking)
+       $http.post(API_URL +'tracking',$rootScope.tracking)
        .then(function(response){//send data from ionic to laravel then return sth
        console.log( "save in DB");
        console.log(response.data);       
@@ -409,12 +421,42 @@ console.log($rootScope.tracking.emailuser);
        $ionicLoading.hide();
        $rootScope.aya="ayaaaaaaaaaa";
        $rootScope.lati=pos.coords.latitude;
-       $rootScope.long=pos.coords.longitude
+       $rootScope.long=pos.coords.longitude;
        var image ="/img/bluesize.png";
        console.log("$rootScope.lati iiiiiiiiiiiiiiiis "+$rootScope.lati);
 
-       ////////////Take All Geolocation (Drivers) From DB///////////
-       $http.get(API_URL + 'getGeolocationDriver').then(function(response){
+         ////////////Take spasific user Geolocation (Users) From DB///////////
+
+
+if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all user by this if statement 
+       $http.post( API_URL +'getGeolocationUser',$rootScope.email)
+       .then(function(response){//send data from ionic to laravel then return sth
+       console.log( "save in DB");
+       console.log(response.data);       
+        $rootScope.GeolocationUser = response.data;
+       var imageuser="/img/markeruser.png";
+       marker = new google.maps.Marker({
+       position: new google.maps.LatLng($rootScope.GeolocationUser[0]['trackLati'], $rootScope.GeolocationUser[0]['trackLong']),
+       map: $scope.map,
+       animation: google.maps.Animation.DROP,
+       icon: imageuser,
+       title: 'Hello World!'
+       });//marker  
+       ///////////////////// To Set Msg IN Marker ////////////////////////////
+       var user="User"+" "+$rootScope.GeolocationUser[0]['firstname']+'<br>'+$rootScope.GeolocationUser[0]['phonenum'];
+       attachSecretMessage(marker, user);
+       function attachSecretMessage(marker, user) {
+       var infowindow = new google.maps.InfoWindow({
+       content:user
+       });
+       marker.addListener('click', function() {
+       infowindow.open($scope.map, marker);
+       });
+       }
+      });//fun then
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////Take All Geolocation (Drivers) From DB *****Only Driver Avarialbe******* ///////////
+       $http.get(API_URL + 'getlocationD').then(function(response){
        console.log("Driver geolocation "+response.data);
        console.log(response.data);
        $rootScope.GeolocationDriver = response.data;
@@ -445,8 +487,7 @@ console.log($rootScope.tracking.emailuser);
       ///////////////////// To Set Msg IN Marker ////////////////////////////
        var driveruser="driver"+" "+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+$rootScope.GeolocationDriver[i]['phonenum'];
        attachSecretMessage(marker, driveruser);
-       }//for
-       
+     }//for  
        function attachSecretMessage(marker, driveruser) {
        var infowindow = new google.maps.InfoWindow({
        content: driveruser
@@ -455,44 +496,12 @@ console.log($rootScope.tracking.emailuser);
        infowindow.open($scope.map, marker);
        });
        }//function
-       /////////////////////////////////////////////
+     });//get
+////////////////////////////////////////////////////////////////////////////////////////////
 
 
-      });//get   
 
 
-    /////////////////////////////////////////////////////////////////
-       ////////////Take spasific user Geolocation (Users) From DB///////////
-
-
-if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all user by this if statement 
-       $http.post( API_URL +'getGeolocationUser',$rootScope.email)
-       .then(function(response){//send data from ionic to laravel then return sth
-       console.log( "save in DB");
-       console.log(response.data);       
-        $rootScope.GeolocationUser = response.data;
-       var imageuser="/img/markeruser.png";
-       marker = new google.maps.Marker({
-       position: new google.maps.LatLng($rootScope.GeolocationUser[0]['trackLati'], $rootScope.GeolocationUser[0]['trackLong']),
-       map: $scope.map,
-       animation: google.maps.Animation.DROP,
-       icon: imageuser,
-       title: 'Hello World!'
-       });//marker  
-       ///////////////////// To Set Msg IN Marker ////////////////////////////
-       var user="User"+" "+$rootScope.GeolocationUser[0]['firstname']+'<br>'+$rootScope.GeolocationUser[0]['phonenum'];
-       attachSecretMessage(marker, user);
-       function attachSecretMessage(marker, user) {
-       var infowindow = new google.maps.InfoWindow({
-       content:user
-       });
-       marker.addListener('click', function() {
-       infowindow.open($scope.map, marker);
-       });
-       }
-       /////////////////////////////////////////////
-
-       });//fun then
 }else{//if driver of manger login then show all user in the Map
        console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee if driver of manger login then show all user in the Map");
        $http.get(API_URL + 'getGeolocationAllUser').then(function(response){
@@ -529,14 +538,52 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
        infowindow.open($scope.map, marker);
        });
        }
-       /////////////////////////////////////////////
         });//get
-}//else
- 
+/////////////////////////////////////////////Show ******All Driver/////////////////////////////////
+       ////////////Take All Geolocation (Drivers) From DB///////////
+       $http.get(API_URL + 'getGeolocationDriver').then(function(response){
+       console.log("Driver geolocation "+response.data);
+       console.log(response.data);
+       $rootScope.GeolocationDriver = response.data;
+       
+       for(var i=0;i<response.data.length;i++){
+       var imagedriver="";
+       if ($rootScope.GeolocationDriver [i]['nameoffice']=='madina'){
+       console.log("madinaaaaaaaaaaaaaaaaaaaaaaa icooooooon imagggeeeeeeeeeeeee");
+       imagedriver="/img/madina.png";
+       }
+       else{
+       console.log("not madina icooooooon imagggeeeeeeeeeeeee");
+       imagedriver="/img/taxi4.png";
+       }
 
-/////////////////////////////////////////////////////////////////
-        ////////////Take All Geolocation (Manger) From DB///////////
+       console.log(imagedriver);
+       console.log($rootScope.GeolocationDriver [i]['trackLati']);
+       console.log( $rootScope.GeolocationDriver [i]['trackLong']);
+       ///////Put Marker
+       console.log(imagedriver);
+      marker = new google.maps.Marker({
+      position: new google.maps.LatLng($rootScope.GeolocationDriver[i]['trackLati'],$rootScope.GeolocationDriver [i]['trackLong']),
+      map: $scope.map,
+      animation: google.maps.Animation.DROP,
+      icon: imagedriver,
+      title: 'Hello World!'
+      });//marker
+      ///////////////////// To Set Msg IN Marker ////////////////////////////
+       var driveruser="driver"+" "+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+$rootScope.GeolocationDriver[i]['phonenum'];
+       attachSecretMessage(marker, driveruser);
+      }//for  
+       function attachSecretMessage(marker, driveruser) {
+       var infowindow = new google.maps.InfoWindow({
+       content: driveruser
+       });
+       marker.addListener('click', function() {
+       infowindow.open($scope.map, marker);
+       });
+       }//function
+      });//get
 
+ ////////////Take All Geolocation (Manger) From DB Only for Driver & Manger ***NOT for user///////////
        $http.get(API_URL + 'getGeolocationManger').then(function(response){
        console.log("Driver geolocation "+response.data);
        console.log(response.data);
@@ -561,7 +608,7 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
        attachSecretMessage(marker, manger);
        }//for
        
-function attachSecretMessage(marker, manger) {
+  function attachSecretMessage(marker, manger) {
         var infowindow = new google.maps.InfoWindow({
           content: manger
         });
@@ -569,60 +616,20 @@ function attachSecretMessage(marker, manger) {
         marker.addListener('click', function() {
           infowindow.open($scope.map, marker);
         });
-      }
+        }
+        });//get
 
 
 
-       });//get
+}//else
+ 
 
        }, function (error) {
        alert('Unable to get location: ' + error.message);
        }//error
        );//getcurrent location
-///////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-     /*
-     To show all user  YOU MUST Delete*********************************
-      $http.get(API_URL + 'getGeolocationUser').then(function(response){
-       console.log("Driver geolocation "+response.data);
-       console.log(response.data);
-       $rootScope.GeolocationUser = response.data;
-       for(var i=0;i<response.data.length;i++){
-       console.log($rootScope.GeolocationUser[i]['trackLati']);
-       console.log($rootScope.GeolocationUser[i]['trackLong']);
-       console.log("emailllllllllllllll  ");
-       console.log($rootScope.GeolocationUser[i]['email']);
-       console.log("loginnnnnnnnnnn userrrrrrrrrrr to teeeeeeest   ");
-       console.log($rootScope.email);
-       
-       var result=angular.equals($rootScope.GeolocationUser[i]['email'], $rootScope.email.emailuser)
-}
-
-console.log("resullllllllllllllt isssssssssssss======"+result);
-       if ($rootScope.GeolocationUser[i]['email'] ==  $rootScope.tracking.emailuser){
-
-console.log("ssssssssssssssssssssssssssssssssssssssame email");
-       }
-      
-       ///////Put Marker
-        var imageuser="/img/markeruser.png";
-       marker = new google.maps.Marker({
-       position: new google.maps.LatLng($rootScope.GeolocationUser[i]['trackLati'], $rootScope.GeolocationUser[i]['trackLong']),
-       map: $scope.map,
-       animation: google.maps.Animation.DROP,
-       icon: imageuser,
-       title: 'Hello World!'
-       });//marker   
-       }//for User
-       
-       });
-*/
-
-       
-
 ////////////////////////////////////////////// Center Me /////////////////////////////////
+
        $scope.centerOnMe = function () {
        console.log("Centering");
        if (!$scope.map) {
@@ -640,13 +647,25 @@ console.log("ssssssssssssssssssssssssssssssssssssssame email");
        $ionicLoading.hide();
 
        $rootScope.lati=pos.coords.latitude;
-       $rootScope.long=pos.coords.longitude
-       var image ="/img/bluesize.png";
+       $rootScope.long=pos.coords.longitude;
+
+       var imageCenterMe;
+        if ($rootScope.LoginData[8]=='user'){
+       imageCenterMe="/img/markeruser.png";
+       }
+        else if ($rootScope.LoginData[1]=='driver'){
+       imageCenterMe="/img/madina.png";
+       }
+        else if ($rootScope.LoginData[8]=='manger'){
+       imageCenterMe="/img/markermanger.png";
+       }
+
+       //var image ="/img/bluesize.png";
        marker = new google.maps.Marker({
        position: new google.maps.LatLng($rootScope.lati, $rootScope.long),//32.2197215, 35.2755521),
        map: $scope.map,
        animation: google.maps.Animation.DROP,
-                   icon: image,
+       icon: imageCenterMe,
 
 
        title: 'Hello World!'
@@ -672,23 +691,85 @@ console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
 
 
 
+.controller('mangerCheckADDChildeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+     console.log("in mangerCheckADDChildeCtrl controller"); 
+     $rootScope.chooseDriver={};
+      $rootScope.Correctchossen={};
+      $rootScope.driverchoose={};
+       $http.get( API_URL +'getChildInfo')
+      .then(function(response){//send data from ionic to laravel then return sth
+      $ionicLoading.hide();
+       console.log(response.data);       
+      $rootScope.ShowChildeFromUserAdd=response.data;
+      console.log( $rootScope.ShowChildeFromUserAdd);
+
+    });//fun then
+
+       $http.get(API_URL + 'getGeolocationDriver').then(function(response){
+       console.log("Driver geolocation "+response.data);
+       console.log(response.data);
+       $rootScope.ALLDriver = response.data;
+       console.log($rootScope.ALLDriver);
+       console.log($rootScope.ALLDriver[0]['firstname']);
+ 
+       $scope.selectables = response.data;///important  to show all driver inselecter
+     // console.log($rootScope.chooseDriver.firstname);
+      //console.log( $rootScope.driverchoose);
+        
+       });
+
+$rootScope.chooseDriver={"firstname":$rootScope.chooseDriver.firstname}
+
+console.log($rootScope.chooseDriver.firstname);
+
+      /*$scope.showSelectValue=function(myselect){
+ console.log(myselect);
+     
+
+      }*/
 
 
+})
 
+.controller('AddChildrenCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+     console.log("in AddChildrenCtrl controller"); 
+     $scope.addchildren={};
+    
+ $scope.submitAddChildren = function(){
+   $scope.addchildrenWithEmailParentOfChild={"ParentEmail":$rootScope.email.emailuser,
+                                               "numberchildren":$scope.addchildren.numberChildren,
+                                               "mobilenum":$scope.addchildren.mobilenum,
+                                               "fromplace":$scope.addchildren.fromplace,
+                                               "toplace":$scope.addchildren.toplace,
+                                                  "ParentFirstname":$rootScope.genericFirstName,
+                                                  "ParentLastname":$rootScope.genericsecondName,
+                                                  "PaymentMethod":$scope.addchildren.Payment};
+
+console.log("$scope.addchildren.Payment"+$scope.addchildren.Payment); 
+console.log($rootScope.genericFirstName);
+ console.log($rootScope.genericsecondName);
+    $ionicLoading.show();
+      console.log($scope.addchildrenWithEmailParentOfChild);
+      $http.post( API_URL +'AddChildren',$scope.addchildrenWithEmailParentOfChild)
+      .then(function(response){//send data from ionic to laravel then return sth
+      $ionicLoading.hide();
+       console.log(response.data);       
+      $scope.result=response.data;
+    });//fun then
+
+  };//fun submit
+
+})
 
 
 
 
 .controller('TestmapCtrl', function($scope, $ionicLoading) {
-       console.log("Centering");
-       
+       console.log("Centering");       
 })
 
 .controller('UserCtrl', function($scope,$http, $rootScope,$state) {
 console.log("in UserCtrl controller");
-
-
-
 })
 
 

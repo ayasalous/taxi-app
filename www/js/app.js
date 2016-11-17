@@ -147,6 +147,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'starter
       }
     }
 }) 
+  .state('app.addchildren', {
+    url: '/addchildren',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/addchildren.html',
+        controller: 'AddChildrenCtrl'
+      }
+    }
+})
+  .state('app.mangerCheckADDChilde', {
+    url: '/mangerCheckADDChilde',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/mangerCheckADDChilde.html',
+        controller: 'mangerCheckADDChildeCtrl'
+      }
+    }
+})
 
  .state('app.updatedriver', {
     url: '/updatedriver',

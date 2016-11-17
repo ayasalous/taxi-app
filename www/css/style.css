@@ -1,4 +1,9 @@
 /* Empty. Add your own CSS if you like */
+
+.backgroundChild{
+ background-color: #f098b5;
+}
+
 #firstinput{
   
     height: 15px;
@@ -38,7 +43,10 @@ margin-top: 1px !important;
 
 
 
-
+#marginform{
+margin-left: 5px !important;
+margin-right: 10px !important;
+}
 .animate-hide {
   transition: all linear 0.5s;
   line-height: 20px;
@@ -139,7 +147,15 @@ width: 100% !important;
 
 margin-bottom: 0px !important;
 }
+#loginheader{
+margin-top:30px !important ;
 
+
+}
+#loginheaderll{
+margin-top: 30px !important;
+
+}
 
 .mangername{
 
@@ -197,4 +213,49 @@ margin-left: 2px !important;
 margin-top: 30px !important;
 
 
+}
+
+.ion-input-select--large,
+.ion-input-select,
+select {
+  -webkit-appearance:none;
+  background-repeat: no-repeat;
+  background-color: rgba(0,0,0,0);  
+  border:thin solid #dddddd;
+  font-weight:300;
+  display:inline;
+  vertical-align:middle;
+  color:#333;
+  padding: auto 0;
+  overflow:hidden;
+  box-sizing:border-box;
+
+}
+
+.ion-input-select--large {
+  width:420px;
+  font-size:1.6rem;
+  background-image: url(http://i.imgur.com/7rGM4IX.png);
+  text-indent:40px;
+  padding:1.2rem 0;
+}
+
+.ion-input-select {
+  width:200px;
+  font-size:1rem;
+  background-image: url(http://i.imgur.com/nA9xx1X.png);
+  text-indent:20px;
+  padding:.5rem 0;
+}
+
+option {
+  background:#444;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+:focus {
+  outline:none;
 }

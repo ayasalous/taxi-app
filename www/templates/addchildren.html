@@ -1,0 +1,71 @@
+<ion-view class="background" view-title="ADD Children Page">
+  <ion-content   class="padding">
+    
+<div class="list">
+ <a><img  style="width: 100px" src="/img/bus.png"> 
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;
+  <img  style="width: 100px" src="/img/book.png"> 
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+  <span style="margin-top: 0px !important"> <font style="font-family: 'fontawesome';font-size:30px;  font-weight: normal;
+    font-style: normal;">ADD Children</font></span> 
+ </a></div>
+
+
+    <form  class="mangername"  ng-submit="submitAddChildren()">  
+    <div  class="list">
+	 
+	   <label  class="item item-input item-floating-label">
+    <span class="input-label">number of Children </span>
+      <input  id="input" type="number" placeholder="Children Num" ng-model="addchildren.numberChildren" required="please you must fill this field ">
+      </label>
+	 
+	  <label   class="item item-input item-floating-label">
+	     <span class="input-label">Mobile Number</span>
+	    <input id="input" type="number" placeholder="Mobile number " ng-model="addchildren.mobilenum" required="please you must fill this field ">
+	 </label>
+	 
+	  <label class="item item-input item-floating-label">
+	   <span class="input-label"> From Palce</span>
+	    <input  id="input" type="text" placeholder="From Palce" ng-model="addchildren.fromplace" required="please you must fill this field ">
+	</label>
+	  
+	  <label class="item item-input item-floating-label">
+	   <span class="input-label"> To Place</span>
+	    <input  id="input" type="text" placeholder="To Place" ng-model="addchildren.toplace" required="please you must fill this field ">
+	 </label>
+
+
+
+
+<br>
+   &nbsp; 
+   <font style="font-family: 'fontawesome';font-size:30px;  font-weight: normal;
+    font-style: normal;">ADD Children</font>
+    </font> 
+   <br> <br> 
+<ion-list class="background" class="mangername">
+  <ion-radio   id="radiocheck" ng-model="addchildren.Payment" ng-value="'daily'">Daily</ion-radio>
+  <ion-radio  id="radiocheck" ng-model="addchildren.Payment"  ng-value="'weekly'">Weekly</ion-radio>
+  <ion-radio  id="radiocheck" ng-model="addchildren.Payment"  ng-value="'monthly'">Monthly</ion-radio>
+ </ion-list>
+<br>
+
+
+
+
+<div class="padding assertive" style="font-size:18px;">
+	{{ result }}
+</div>
+
+	 <button id="submitButton" type="submit" class="button button-positive button">Register</button>
+</div>
+</form>
+
+
+
+	
+
+
+
+  </ion-content>
+</ion-view>
