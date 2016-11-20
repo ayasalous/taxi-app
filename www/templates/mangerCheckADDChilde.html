@@ -22,29 +22,33 @@
   <div class="item item-text-wrap">
    Hello.<br>
   my name is {{childInfo.ParentFirstname}} {{childInfo.ParentLastname}} <br>
-  I want i reach my child to school every day  the number of child is {{childInfo.numberchildren}}
-  at  {{childInfo.PaymentMethod}} and this is my Mobile phone {{childInfo.mobilenum}} 
+  I want i to reserve Schedule Order every day  the number of people is {{childInfo.numberchildren}}.
+  <br>I will  payment {{childInfo.PaymentMethod}} .<br>I want to reach taxi at          ,and this is my Mobile phone {{childInfo.mobilenum}} 
+  my Email is {{childInfo.ParentEmail}} 
  </div>
 </div>
 
 
 
-<button style="margin-left: 50px"  class="button  button-positive" modal-select="" 
-   ng-model="someModel" options="selectables"  modal-title="Choose Driver"   >
- Choose Driver {{someModel.firstname}}
-    
-         <div class="option">
- {{option.firstname}}
- {{option.lastname}}  
-</div>
 
-     </button>
- 
-<br>
 
-<form>
-    <input id="input" type="text" placeholder=""  ng-model="chooseDriver.firstname"  >{{someModel.firstname}} 
-</form>
+<button style="margin-left: 50px"  class="button  button-positive" 
+  modal-select="" 
+  ng-model="someModel" 
+  options="selectables"  
+  
+  on-select="shoutLoud(newValue, oldValue,childInfo)"
+  modal-title="Choose Driver" 
+  has-search="true">
+  
+  Choose Driver {{someModel.firstname}}
+  <div  class="option">
+  {{option.firstname}}{{option.lastname}} 
+  </div>
+     
+</button>
+
+
 
 </div><!-- ng-repeat -->
 

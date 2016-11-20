@@ -156,16 +156,27 @@ margin-top:30px !important ;
 margin-top: 30px !important;
 
 }
+.marginForm{
 
+position: static !important;
+width:290px;
+border: 3px solid #ffffff;
+margin:auto;
+}
 .mangername{
 
 position: static !important;
 width: 300px;
-border: 3px solid #21acc4;
+border: 3px hidden #ffffff;
 margin-right: 10px !important;
-margin-left: 10px !important;
 margin-top: 2px !important;
 margin-bottom:5px !important;
+}
+.paymentstyle{
+
+width:150px !important ;
+margin-right: 15px !important;
+
 }
 .showDriver{
 

@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ionic.rating','ionic-modal-select'] )
+angular.module('starter.controllers', ['ionic.rating','ionic-modal-select',"ion-datetime-picker"] )
 
 .controller('AppCtrl', function($scope,$rootScope, $ionicModal, $timeout,$rootScope,$http,$location,$state,$window) {
   console.log('123');
@@ -691,19 +691,41 @@ console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
 
 
 
-.controller('mangerCheckADDChildeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+.controller('mangerCheckADDChildeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$document) {
      console.log("in mangerCheckADDChildeCtrl controller"); 
-     $rootScope.chooseDriver={};
-      $rootScope.Correctchossen={};
-      $rootScope.driverchoose={};
-       $http.get( API_URL +'getChildInfo')
+     $rootScope.chooseDriverInfoAndUserInfo={};
+$rootScope.childInfooo={};
+      $http.get( API_URL +'getChildInfo')
       .then(function(response){//send data from ionic to laravel then return sth
       $ionicLoading.hide();
-       console.log(response.data);       
+      console.log(response.data);       
       $rootScope.ShowChildeFromUserAdd=response.data;
       console.log( $rootScope.ShowChildeFromUserAdd);
+      });//fun then
+      
+      $rootScope.selectables={};
+      $scope.someModel={};
+  
 
-    });//fun then
+
+  $scope.shoutLoud = function(newValuea, oldValue,childInfo){
+     console.log("changed from " + JSON.stringify(oldValue) + " to " + JSON.stringify(newValuea));
+     console.log(newValuea.email);
+     $rootScope.childInfooo=childInfo;
+     $rootScope.chooseDriverInfoAndUserInfo={"driverEmail":newValuea.email,
+                                             "ParentEmail": $rootScope.childInfooo.ParentEmail};
+
+     console.log( $rootScope.childInfooo.ParentEmail);
+  
+     $http.post( API_URL +'DriverResponseInfoAndParentInfo', $rootScope.chooseDriverInfoAndUserInfo)
+     .then(function(response){
+     console.log(response.data);
+     });
+
+
+  };//shoutload
+
+
 
        $http.get(API_URL + 'getGeolocationDriver').then(function(response){
        console.log("Driver geolocation "+response.data);
@@ -711,22 +733,11 @@ console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
        $rootScope.ALLDriver = response.data;
        console.log($rootScope.ALLDriver);
        console.log($rootScope.ALLDriver[0]['firstname']);
- 
-       $scope.selectables = response.data;///important  to show all driver inselecter
-     // console.log($rootScope.chooseDriver.firstname);
-      //console.log( $rootScope.driverchoose);
-        
-       });
+       $rootScope.selectables = response.data;
+       
 
-$rootScope.chooseDriver={"firstname":$rootScope.chooseDriver.firstname}
+        });
 
-console.log($rootScope.chooseDriver.firstname);
-
-      /*$scope.showSelectValue=function(myselect){
- console.log(myselect);
-     
-
-      }*/
 
 
 })
@@ -734,7 +745,21 @@ console.log($rootScope.chooseDriver.firstname);
 .controller('AddChildrenCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
      console.log("in AddChildrenCtrl controller"); 
      $scope.addchildren={};
-    
+     $rootScope.hello={};
+      $rootScope.Price={};
+      $rootScope.timeValue;
+     console.log($rootScope.hello);  
+     console.log( $rootScope.Price);
+    // $rootScope.timeValue={"tt":$rootScope.timeValue.tt};
+     console.log( $rootScope.timeValue);
+
+
+
+$scope.change=function(firstname){
+console.log(firstname.data);
+};
+
+
  $scope.submitAddChildren = function(){
    $scope.addchildrenWithEmailParentOfChild={"ParentEmail":$rootScope.email.emailuser,
                                                "numberchildren":$scope.addchildren.numberChildren,
@@ -743,9 +768,12 @@ console.log($rootScope.chooseDriver.firstname);
                                                "toplace":$scope.addchildren.toplace,
                                                   "ParentFirstname":$rootScope.genericFirstName,
                                                   "ParentLastname":$rootScope.genericsecondName,
-                                                  "PaymentMethod":$scope.addchildren.Payment};
+                                                  "PaymentMethod":$scope.addchildren.Payment,
+                                                  "timedate":$scope.addchildren.dateTime};
 
 console.log("$scope.addchildren.Payment"+$scope.addchildren.Payment); 
+console.log($scope.addchildren.dateTime);
+
 console.log($rootScope.genericFirstName);
  console.log($rootScope.genericsecondName);
     $ionicLoading.show();
@@ -758,6 +786,8 @@ console.log($rootScope.genericFirstName);
     });//fun then
 
   };//fun submit
+
+
 
 })
 

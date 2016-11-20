@@ -11,10 +11,35 @@
  </a></div>
 
 
-    <form  class="mangername"  ng-submit="submitAddChildren()">  
+
+<!--
+<ion-list >
+     <br>
+     &nbsp;   <font style="font-family: 'fontawesome';font-size:20px;  font-weight: normal;
+     font-style: normal;color:#387ef5 ">Start Day and Time reach Taxi:</font>
+     </font> 
+     <br>  
+     <br>
+
+	 
+     <div  class="item" ion-datetime-picker ng-change="change()" ng-model="time">
+     {{datetimeValue| date: "YYYY-MM-DDTHH:mmZ"}}
+     </div>
+
+     </ion-list>
+
+     <ion-datetime displayFormat="MMM DD, h:mm A" [(ngModel)]="myDate"></ion-datetime>
+
+-->
+
+
+
+
+<div class="mangername" class="padding">
+    <form class="marginForm"   ng-submit="submitAddChildren()">  
     <div  class="list">
 	 
-	   <label  class="item item-input item-floating-label">
+	  <label  class="item item-input item-floating-label">
     <span class="input-label">number of Children </span>
       <input  id="input" type="number" placeholder="Children Num" ng-model="addchildren.numberChildren" required="please you must fill this field ">
       </label>
@@ -35,20 +60,53 @@
 	 </label>
 
 
+            
 
 
-<br>
-   &nbsp; 
-   <font style="font-family: 'fontawesome';font-size:30px;  font-weight: normal;
-    font-style: normal;">ADD Children</font>
-    </font> 
-   <br> <br> 
-<ion-list class="background" class="mangername">
-  <ion-radio   id="radiocheck" ng-model="addchildren.Payment" ng-value="'daily'">Daily</ion-radio>
-  <ion-radio  id="radiocheck" ng-model="addchildren.Payment"  ng-value="'weekly'">Weekly</ion-radio>
-  <ion-radio  id="radiocheck" ng-model="addchildren.Payment"  ng-value="'monthly'">Monthly</ion-radio>
- </ion-list>
-<br>
+     <br>
+     &nbsp;   <font style="font-family: 'fontawesome';font-size:20px;  font-weight: normal;
+     font-style: normal;color:#387ef5"> Type Of Payment: </font>
+    
+     <br>  
+     <ion-list class="paymentstyle" class="background" class="mangername">
+     <ion-radio   id="radiocheck" ng-model="addchildren.Payment" ng-value="'daily'">Daily</ion-radio>
+     <ion-radio  id="radiocheck" ng-model="addchildren.Payment"  ng-value="'weekly'">Weekly</ion-radio>
+     <ion-radio  id="radiocheck" ng-model="addchildren.Payment"  ng-value="'monthly'">Monthly</ion-radio>
+     </ion-list>
+     <br>
+
+
+
+
+ 
+            
+             <div ng-change="change('{{timeValue}}')"  class="item item-icon-left" ion-datetime-picker time am-pm  ng-model="timeValue">
+             <i class="icon ion-ios-time-outline positive"></i>
+             Time For Taxi Reach
+
+
+             <strong><div id="hi"> aya {{timeValue| date: "h:mm a"}}</div></strong>
+
+
+  
+            </div> 
+             <br> <br> 
+
+
+    
+<!--
+
+
+
+<ion-item>
+  <ion-label>Date</ion-label>
+  <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+</ion-item>
+
+-->
+
+
+
 
 
 
@@ -57,13 +115,20 @@
 	{{ result }}
 </div>
 
-	 <button id="submitButton" type="submit" class="button button-positive button">Register</button>
+
+
+
+   	 <button id="submitButton" type="submit" class="button button-positive button">Register</button>
+
+
 </div>
 </form>
+</div>
 
 
 
-	
+ 
+
 
 
 
