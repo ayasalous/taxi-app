@@ -694,7 +694,7 @@ console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
 .controller('mangerCheckADDChildeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$document) {
      console.log("in mangerCheckADDChildeCtrl controller"); 
      $rootScope.chooseDriverInfoAndUserInfo={};
-$rootScope.childInfooo={};
+      $rootScope.childInfooo={};
       $http.get( API_URL +'getChildInfo')
       .then(function(response){//send data from ionic to laravel then return sth
       $ionicLoading.hide();
@@ -702,6 +702,7 @@ $rootScope.childInfooo={};
       $rootScope.ShowChildeFromUserAdd=response.data;
       console.log( $rootScope.ShowChildeFromUserAdd);
       });//fun then
+
       
       $rootScope.selectables={};
       $scope.someModel={};
@@ -712,8 +713,10 @@ $rootScope.childInfooo={};
      console.log("changed from " + JSON.stringify(oldValue) + " to " + JSON.stringify(newValuea));
      console.log(newValuea.email);
      $rootScope.childInfooo=childInfo;
+     console.log($rootScope.childInfooo.id);
      $rootScope.chooseDriverInfoAndUserInfo={"driverEmail":newValuea.email,
-                                             "ParentEmail": $rootScope.childInfooo.ParentEmail};
+                                             "ParentEmail": $rootScope.childInfooo.ParentEmail,
+                                             "idOrder":$rootScope.childInfooo.id};
 
      console.log( $rootScope.childInfooo.ParentEmail);
   
@@ -743,49 +746,69 @@ $rootScope.childInfooo={};
 })
 
 .controller('AddChildrenCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
-     console.log("in AddChildrenCtrl controller"); 
-     $scope.addchildren={};
-     $rootScope.hello={};
-      $rootScope.Price={};
-      $rootScope.timeValue;
-     console.log($rootScope.hello);  
-     console.log( $rootScope.Price);
-    // $rootScope.timeValue={"tt":$rootScope.timeValue.tt};
-     console.log( $rootScope.timeValue);
+       console.log("in AddChildrenCtrl controller"); 
+       $scope.addchildren={};
+       $rootScope.hello={};
+       $rootScope.Price={};
+       $rootScope.time={};
+       $scope.hour={};
+       $scope.minute={};
+       $scope.second={};
+       $scope.am_pm={};
+       $rootScope.res={};
+       $scope.change=function(timechoose){
+       $rootScope.time=timechoose;   
+       
+       console.log( timechoose);
+       var time = timechoose.toString().split(" ");
+       var time1 = time[0];
+       var time2 = time[1];
+       console.log( time);
+       console.log(time1);
+       console.log(time2);
+       var Allhour = time[4].toString().split(":");
+       $scope.hour=Allhour[0];
+       $scope.minute=Allhour[1];
+       $scope.second=Allhour[2];
+       console.log(Allhour);
+       console.log(Allhour[0]);
+       console.log(Allhour[1]);
+       console.log(Allhour[2]);
+       if (12<$scope.hour){
+       $scope.hour=$scope.hour-12;
+       console.log($scope.hour);
+       $scope.am_pm="pm";
+       }else
+       $scope.am_pm="am";
+        };
 
-
-
-$scope.change=function(firstname){
-console.log(firstname.data);
-};
-
-
- $scope.submitAddChildren = function(){
-   $scope.addchildrenWithEmailParentOfChild={"ParentEmail":$rootScope.email.emailuser,
+        $scope.submitAddChildren = function(){
+        $scope.addchildrenWithEmailParentOfChild={"ParentEmail":$rootScope.email.emailuser,
                                                "numberchildren":$scope.addchildren.numberChildren,
                                                "mobilenum":$scope.addchildren.mobilenum,
                                                "fromplace":$scope.addchildren.fromplace,
                                                "toplace":$scope.addchildren.toplace,
-                                                  "ParentFirstname":$rootScope.genericFirstName,
-                                                  "ParentLastname":$rootScope.genericsecondName,
-                                                  "PaymentMethod":$scope.addchildren.Payment,
-                                                  "timedate":$scope.addchildren.dateTime};
-
-console.log("$scope.addchildren.Payment"+$scope.addchildren.Payment); 
-console.log($scope.addchildren.dateTime);
-
-console.log($rootScope.genericFirstName);
- console.log($rootScope.genericsecondName);
-    $ionicLoading.show();
-      console.log($scope.addchildrenWithEmailParentOfChild);
-      $http.post( API_URL +'AddChildren',$scope.addchildrenWithEmailParentOfChild)
-      .then(function(response){//send data from ionic to laravel then return sth
-      $ionicLoading.hide();
+                                               "ParentFirstname":$rootScope.genericFirstName,
+                                               "ParentLastname":$rootScope.genericsecondName,
+                                               "PaymentMethod":$scope.addchildren.Payment,
+                                               "hour":$scope.hour,
+                                               "minute":$scope.minute,
+                                               "second":$scope.second,
+                                               "am_pm":$scope.am_pm};
+       console.log($rootScope.time);
+       console.log("$scope.addchildren.Payment"+$scope.addchildren.Payment); 
+       console.log($rootScope.genericFirstName);
+       console.log($rootScope.genericsecondName);
+       $ionicLoading.show();
+       console.log($scope.addchildrenWithEmailParentOfChild);
+       $http.post( API_URL +'AddChildren',$scope.addchildrenWithEmailParentOfChild)
+       .then(function(response){//send data from ionic to laravel then return sth
+       $ionicLoading.hide();
        console.log(response.data);       
-      $scope.result=response.data;
-    });//fun then
+       $scope.result=response.data;
+       });//fun then
 
-  };//fun submit
+       };//fun submit
 
 
 

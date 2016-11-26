@@ -12,26 +12,6 @@
 
 
 
-<!--
-<ion-list >
-     <br>
-     &nbsp;   <font style="font-family: 'fontawesome';font-size:20px;  font-weight: normal;
-     font-style: normal;color:#387ef5 ">Start Day and Time reach Taxi:</font>
-     </font> 
-     <br>  
-     <br>
-
-	 
-     <div  class="item" ion-datetime-picker ng-change="change()" ng-model="time">
-     {{datetimeValue| date: "YYYY-MM-DDTHH:mmZ"}}
-     </div>
-
-     </ion-list>
-
-     <ion-datetime displayFormat="MMM DD, h:mm A" [(ngModel)]="myDate"></ion-datetime>
-
--->
-
 
 
 
@@ -80,35 +60,14 @@
 
  
             
-             <div ng-change="change('{{timeValue}}')"  class="item item-icon-left" ion-datetime-picker time am-pm  ng-model="timeValue">
-             <i class="icon ion-ios-time-outline positive"></i>
-             Time For Taxi Reach
-
-
-             <strong><div id="hi"> aya {{timeValue| date: "h:mm a"}}</div></strong>
-
-
-  
-            </div> 
-             <br> <br> 
-
-
-    
-<!--
-
-
-
-<ion-item>
-  <ion-label>Date</ion-label>
-  <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
-</ion-item>
-
--->
-
-
-
-
-
+       <div ng-change="change(timeValue )"  class="item item-icon-left" ion-datetime-picker time am-pm 
+        ng-model="timeValue">
+       <i class="icon ion-ios-time-outline positive"></i>
+       Time For Taxi Reach is :
+       <strong><div>  &nbsp; &nbsp;&nbsp; {{timeValue| date: "h:mm a"}}</div></strong>
+       </div> 
+       <br> <br> 
+ 
 
 
 <div class="padding assertive" style="font-size:18px;">

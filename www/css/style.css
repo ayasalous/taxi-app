@@ -172,6 +172,18 @@ margin-right: 10px !important;
 margin-top: 2px !important;
 margin-bottom:5px !important;
 }
+.mangernamee{
+
+
+position: static !important;
+width: 300px;
+border: 3px hidden #ffffff;
+margin-right: 5px !important;
+margin-left: 10px !important;
+margin-top: 2px !important;
+margin-bottom:5px !important;
+
+}
 .paymentstyle{
 
 width:150px !important ;

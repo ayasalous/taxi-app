@@ -1,8 +1,19 @@
-<ion-view view-title="Register Page">
-  <ion-content class="padding">
+<ion-view class="background" view-title="Register Page">
+  <ion-content   class="padding">
     
+<div class="list">
+ <a>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;
+  <img  style="width: 100px" src="/img/registration2.png"> 
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  
+  <span style="margin-top: 0px !important"> <font style="font-family: 'fontawesome';font-size:30px;  font-weight: normal;
+    font-style: normal;">  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Registration Page</font></span> 
+ </a></div>
 
-    <form ng-submit="submitRegister()">  
+
+
+<div class="mangername" class="padding">
+    <form class="marginForm" ng-submit="submitRegister()">  
     <div class="list">
 	 
 	 <label  class="item item-input item-floating-label">
@@ -32,7 +43,9 @@
 	  </label>
 
 <br>
-   &nbsp; <font> Type User:</font> 
+   &nbsp;  <font style="font-family: 'fontawesome';font-size:20px;  font-weight: normal;
+     font-style: normal;color:#387ef5"> Type OF User: </font>
+    
 <ion-list >
   <ion-radio   id="radiocheck" ng-model="user.type" ng-click="show=false;" ng-value="'manger'">Manger</ion-radio>
   <ion-radio  id="radiocheck" ng-model="user.type" ng-click="show=true;"  ng-value="'driver'">Driver</ion-radio>
@@ -57,6 +70,8 @@
 </div>
 </form>
 
+</div>
+  
 
 
 	
