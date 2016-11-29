@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ionic.rating','ionic-modal-select',"ion-datetime-picker"] )
+angular.module('starter.controllers', ['ionic.rating','ionic-modal-select',"ion-datetime-picker","ngCordova"] )
 
 .controller('AppCtrl', function($scope,$rootScope, $ionicModal, $timeout,$rootScope,$http,$location,$state,$window) {
   console.log('123');
@@ -179,12 +179,12 @@ $rootScope.Drivercardnum=Globall.cardnum;
  deleteID=driver;
 $rootScope.DeleteDriverID={"DriverID":deleteID.id};
 console.log($rootScope.DeleteDriverID);
-
 $http.post( API_URL +'deleteDriver',$rootScope.DeleteDriverID);
-
 $state.go('app.showDriver');
   };//fun
    
+
+
 
     })
 
@@ -200,8 +200,25 @@ $state.go('app.showDriver');
    $state.go("app.tab");
 })
 
-.controller('DriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
-      $scope.value={"answer":false};
+.controller('DriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification) {
+       $scope.getStatusAvilable={"email":$rootScope.email.emailuser};
+       console.log(" are you avilable????");
+       $http.post( API_URL +'getStatusAvilable',$scope.getStatusAvilable)
+       .then(function(response){
+       console.log(response.data);
+       console.log(response.data[0].available);
+       if (response.data[0].available=='1'){
+       console.log('111');
+       $scope.value={"answer":true};
+       }
+       else{
+       console.log('000');
+       $scope.value={"answer":false};
+       }
+       })
+
+
+        
       $scope.tt={};
       var value=$scope.value;
       $scope.toggleChange = function() {
@@ -211,7 +228,7 @@ $state.go('app.showDriver');
        $scope.value = false;
 
          $scope.tt={"aa":$scope.value,
-                             "email":$rootScope.email.emailuser};
+                     "email":$rootScope.email.emailuser};
        console.log('testToggle changed to ' + $scope.value); 
        console.log( $scope.tt); 
 
@@ -219,22 +236,44 @@ $state.go('app.showDriver');
       .then(function(response){
       console.log(response.data);
        });
-
-
        };
-/// http-post 
-  ///// to stor it in data
 
-    
+
+     
+
 
        $scope.readOnly = false;//can choose in rating 
        $scope.rating = {};
        $scope.rating.rate = 1;//defult value
        $scope.rating.max = 5;//number of Star Rating
        console.log($scope.rating.max);
+
+       ////////////////////////////Notification /////
+        $scope.add = function() {
+        var alarmTime = new Date();
+        alarmTime.setMinutes(alarmTime.getMinutes() + 1);
+        $cordovaLocalNotification.add({
+            id: "1234",
+            date: alarmTime,
+            message: "This is a message",
+            title: "This is a title",
+            autoCancel: true,
+            sound: null
+       }).then(function () { 
+       console.log("The notification has been set");
+       });
+       };
+       $scope.isScheduled = function() {
+       $cordovaLocalNotification.isScheduled("1234").then(function(isScheduled) {
+       alert("Notification 1234 Scheduled: " + isScheduled);
+       });
+       }
+         //////////////////////////////////////
+
+
 })
 
-.controller('RegisterCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+.controller('RegisterCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification) {
   $scope.result = "";
        ///////////////$rootScope.hideDriverImg = true;/// in fixed image 
       /*$http.get(API_URL + 'login').then(function(response){
@@ -270,7 +309,7 @@ $state.go('app.showDriver');
 })
 
 
-.controller('UpdatedriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+.controller('UpdatedriverCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification) {
       console.log("in Updatedriver controller");
       $scope.updatePage={};
       $scope.name={};
@@ -349,7 +388,7 @@ $state.go('app.showDriver');
 }
  
 })
-.controller('HomeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+.controller('HomeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification) {
  $scope.goToRegisterPage=function(){
    $state.go('app.register');
    console.log(" in Fun goToRegisterPage");
@@ -379,7 +418,7 @@ $state.go('app.showDriver');
 
 
 
-.controller('MapCtrl', function($scope,$http, $rootScope,$state,$ionicLoading){
+.controller('MapCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification){
        console.log("Centering");
       $rootScope.lati={};
       $rootScope.long={};
@@ -435,13 +474,15 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
        console.log(response.data);       
         $rootScope.GeolocationUser = response.data;
        var imageuser="/img/markeruser.png";
+       
        marker = new google.maps.Marker({
        position: new google.maps.LatLng($rootScope.GeolocationUser[0]['trackLati'], $rootScope.GeolocationUser[0]['trackLong']),
        map: $scope.map,
        animation: google.maps.Animation.DROP,
        icon: imageuser,
        title: 'Hello World!'
-       });//marker  
+       });//marker
+
        ///////////////////// To Set Msg IN Marker ////////////////////////////
        var user="User"+" "+$rootScope.GeolocationUser[0]['firstname']+'<br>'+$rootScope.GeolocationUser[0]['phonenum'];
        attachSecretMessage(marker, user);
@@ -524,7 +565,10 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
         animation: google.maps.Animation.DROP,
         icon: imageuser,
         title: 'Hello World!'
-        });//marker   
+        });//marker  
+
+       
+
        ///////////////////// To Set Msg IN Marker ////////////////////////////
        var Alluser="User"+" "+$rootScope.GeolocationAllUser[i]['firstname']+'<br>'+$rootScope.GeolocationAllUser[i]['phonenum'];
        attachSecretMessage(marker, Alluser);
@@ -691,7 +735,7 @@ console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
 
 
 
-.controller('mangerCheckADDChildeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$document) {
+.controller('mangerCheckADDChildeCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$document,$cordovaLocalNotification) {
      console.log("in mangerCheckADDChildeCtrl controller"); 
      $rootScope.chooseDriverInfoAndUserInfo={};
       $rootScope.childInfooo={};
@@ -745,7 +789,7 @@ console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
 
 })
 
-.controller('AddChildrenCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
+.controller('AddChildrenCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification) {
        console.log("in AddChildrenCtrl controller"); 
        $scope.addchildren={};
        $rootScope.hello={};
@@ -817,16 +861,16 @@ console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
 
 
 
-.controller('TestmapCtrl', function($scope, $ionicLoading) {
+.controller('TestmapCtrl', function($scope, $ionicLoading,$cordovaLocalNotification) {
        console.log("Centering");       
 })
 
-.controller('UserCtrl', function($scope,$http, $rootScope,$state) {
+.controller('UserCtrl', function($scope,$http, $rootScope,$state,$cordovaLocalNotification) {
 console.log("in UserCtrl controller");
 })
 
 
-.controller('BrowseCtrl', function($scope,$http, $rootScope,$state) {
+.controller('BrowseCtrl', function($scope,$http, $rootScope,$state,$cordovaLocalNotification) {
 console.log("in BrowseCtrl controller");
 })
 

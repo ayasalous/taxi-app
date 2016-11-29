@@ -29,19 +29,6 @@
 
 
 
-<!--
-
-
-<div class="drivername" class="list">
-  <a id="imageup" class="item item-avatar" href="#">
-    <img src="/img/driver.png">
-     {{genericOfficeName}}   Taxi Office 
-     <br> <h2>Welcome  manger : {{  genericFirstName}} {{genericsecondName}}  </h2>
-    </a>
-</div>
-
--->
-
 
 
 
@@ -50,7 +37,7 @@
   <!--<i style="size: 90px" class="icon icon  ion-android-car ">&nbsp;&nbsp; Are you Avilable ?</i>
    -->
  
-   <a  id="imageupDriverPage" class="item item-avatar" href="#">
+   <a   id="imageupDriverPage" class="item item-avatar" href="#">
       <img src="/img/taxi1.png">Are you Avilable ?
     </a>
 
@@ -61,10 +48,16 @@
          <div class="handle"></div>
        </div>
      </label>
+     
   </li>
 </ul>
 
 <rating  readonly="readOnly" ng-model="rating.rate" max="rating.max"></rating>
+
+
+
+ <button class="button" ng-click="add()">Add notification</button>
+    <button class="button" ng-click="isScheduled()">Is Scheduled</button>
 
 
 <!--<rating  readonly="readOnly" ratingsobj='ratingsObject' max="rating.max"></rating>
