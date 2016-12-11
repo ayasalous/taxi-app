@@ -3,57 +3,76 @@
 
 
 
-
-  
-<div class="mangernamee" class="list">
+<div class="mangernamee" class="padding">
+  <div class="marginForm" >
   <a id="imageup" class="item item-avatar" href="#">
   <img src="/img/manger.png">
   {{genericOfficeName}} Taxi Office
-  <br> <h2>Welcome   {{  genericFirstName}}  {{genericsecondName}}</h2>
+  <br> Welcome   {{  genericFirstName}}  {{genericsecondName}}
   </a>
+</div>
 </div>
 
 
-<center><h4> ADD Driver</h4></center>
-
+ <span style="margin-top: 0px !important;margin-left:40px ">
+    <font style="font-family: 'fontawesome';font-size:30px;  font-weight: normal;
+    font-style: normal;color: #387ef5">   <br>  &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ADD Driver  <br><br> </font></span> 
+ 
 
 <ion-scroll zooming="true" direction="y" style=" height: 400px">
-
+<div class="mangernamee" class="padding">
+  <div class="marginForm" >
 <form ng-submit="MangerAddDriversubmit()">  
   <div  class="list list-inset">
 
+
+<!--style="background-color:rgba(179,220,237,1) " -->
+   
+
   <label class="item item-input">
-    <input  type="text" placeholder="First Name" ng-model="MangerAddDriver.first" required="please you must fill this field ">
+      <span class="input-label"> <i class="icon ion-person">&nbsp;&nbsp; First Name </i> </span>
+
+    <input  type="text"  ng-model="MangerAddDriver.first" required="please you must fill this field ">
   </label>
 
   
   <label class="item item-input">
-   <input   type="text" placeholder="Last Name" ng-model="MangerAddDriver.last" required="please you must fill this field ">
+  <span class="input-label"> <i class="icon ion-person">&nbsp;&nbsp; Last Name </i> </span>
+  <input   type="text"  ng-model="MangerAddDriver.last" required="please you must fill this field ">
   </label>
 
-<label class="item item-input">
-   <input   type="text" placeholder="Office Name" ng-model="MangerAddDriver.officename" required="please you must fill this field ">
-  </label>
+<!--<label class="item item-input">
+        <span class="input-label"> <i class="icon ion-person">&nbsp;&nbsp; OfficeName </i> </span>
 
+ <input   type="text" ng-model="MangerAddDriver.officename" required="please you must fill this field ">
+  </label>
+-->
 
   <label class="item item-input">
-  <input  type="email" pattern="[^ @]*@[^ @]*"  placeholder="Email" ng-model="MangerAddDriver.email"
+         <span class="input-label"> <i class="icon ion-email">&nbsp;&nbsp; Email </i> </span>
+
+  <input  type="email" pattern="[^ @]*@[^ @]*"  ng-model="MangerAddDriver.email"
 	    required="please you must fill this field ">
   </label>
  
   <label class="item item-input">
-  <input  type="password" placeholder="Password" ng-model="MangerAddDriver.password" required="please you must fill this field "> 
+         <span class="input-label"> <i class="icon ion-locked">&nbsp;&nbsp; Password </i> </span>  
+  <input  type="password"  ng-model="MangerAddDriver.password" required="please you must fill this field "> 
    </label>
   
 
 	
   <label class="item item-input">
-<input  type="number" placeholder="Mobile number " ng-model="MangerAddDriver.number" required="please you must fill this field "> 
+           <span class="input-label"> <i class="icon ion-ios-telephone">&nbsp;&nbsp; Mobile Number </i> </span>  
+
+<input  type="number"  ng-model="MangerAddDriver.number" required="please you must fill this field "> 
 </label>
 
 	
     <label class="item item-input">
-<input  type="number" placeholder="Car number " ng-model="MangerAddDriver.cardnumber" required="please you must fill this field "> 
+             <span class="input-label"> <i class="icon ion-android-car">&nbsp;&nbsp; Car Number </i> </span>  
+
+<input  type="number"  ng-model="MangerAddDriver.cardnumber" required="please you must fill this field "> 
 </label>
 </div>
 	 
@@ -66,22 +85,15 @@
 </div>
 
 <button id="submitButton" type="submit" class="button button-positive ion-person-add">
- &nbsp; Add Driver
+  Add Driver
 </button>
 <br><br><br><br><br>
 
 	</form>
+  </div></div>
 </ion-scroll>
 
- <!--
-
-{{genericOfficeName}}
-
- <button  id="submitButton" ng-click="goShowDriver()"  class="button button-positive ion-eye "> &nbsp;Show Driver</button>
-
-<ion-footer-bar class="bar-stable">
-</ion-footer-bar >
- -->
+ <br><br><br><br><br><br><br><br><br><br><br>
 
  
 <div  class="tabs tabs-icon-top  tabs-color-positive"><!--positive is color blue ,,,,,,,tabs-striped No name -->

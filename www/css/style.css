@@ -47,6 +47,7 @@ margin-top: 1px !important;
 margin-left: 5px !important;
 margin-right: 10px !important;
 }
+
 .animate-hide {
   transition: all linear 0.5s;
   line-height: 20px;
@@ -157,11 +158,25 @@ margin-top: 30px !important;
 
 }
 .marginForm{
+position: static !important;
+width:290px;
+border: 3px solid #387ef5;
+margin:auto;
+}
+
+.marginFormLogin{
 
 position: static !important;
 width:290px;
-border: 3px solid #ffffff;
-margin:auto;
+border: 3px solid #387ef5;
+margin-left: 15px !important;
+
+}
+.borderHome{
+border: 3px solid #387ef5;
+
+
+
 }
 .mangername{
 
@@ -200,7 +215,18 @@ margin-left: 6px !important;
 margin-top: 0px !important;
 margin-bottom:10px !important;
 }
+.drivernamee{
 
+
+position: static !important;
+width: 300px;
+border: 3px solid #21acc4;
+margin-right:20px !important;
+margin-left: 10px !important;
+margin-top: 2px !important;
+margin-bottom:20px !important;
+
+}
 
 .drivername{
 

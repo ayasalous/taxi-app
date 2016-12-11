@@ -48,6 +48,7 @@ angular.module('starter.controllers', ['ionic.rating','ionic-modal-select',"ion-
        $http.post( API_URL +'looooginnn',$scope.loginData)
        .then(function(response){
          $ionicLoading.hide();
+
        console.log("Register process Done with response of:");
        console.log(response.data);
 
@@ -98,6 +99,18 @@ console.log($rootScope.LoginData);
       $scope.MangerAddDriversubmit = function(){
       $ionicLoading.show();
       console.log($scope.MangerAddDriver);
+      console.log($rootScope.LoginData[10]);
+      $scope.MangerAddDriver={"email":$scope.MangerAddDriver.email,
+                                "password":$scope.MangerAddDriver.password,
+                                "first":$scope.MangerAddDriver.first,
+                                "last":$scope.MangerAddDriver.last,
+                                "number":$scope.MangerAddDriver.number,
+                                "cardnumber":$scope.MangerAddDriver.cardnumber,
+                                "officename":$rootScope.LoginData[10],
+
+
+      };
+
       $http.post( API_URL +'MangerAddDriver',$scope.MangerAddDriver)
       .then(function(response){//send data from ionic to laravel then return sth
       $ionicLoading.hide();
@@ -411,14 +424,15 @@ $state.go('app.showDriver');
 
 
 
+.controller('DriverOrderNonScedualingCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification) {
+ console.log("in DriverOrderNonScedualingCtrl");
+
+ console.log("driveruser");
+})
 
 
 
-
-
-
-
-.controller('MapCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification){
+.controller('MapCtrl', function($scope,$http, $rootScope,$state,$ionicLoading,$cordovaLocalNotification, $ionicPopup){
        console.log("Centering");
       $rootScope.lati={};
       $rootScope.long={};
@@ -486,6 +500,8 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
        ///////////////////// To Set Msg IN Marker ////////////////////////////
        var user="User"+" "+$rootScope.GeolocationUser[0]['firstname']+'<br>'+$rootScope.GeolocationUser[0]['phonenum'];
        attachSecretMessage(marker, user);
+      //  DoubleClickDriverMarker(marker, user);
+
        function attachSecretMessage(marker, user) {
        var infowindow = new google.maps.InfoWindow({
        content:user
@@ -494,9 +510,20 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
        infowindow.open($scope.map, marker);
        });
        }
+
+       /*// login user 
+       function DoubleClickDriverMarker(marker, user){
+         google.maps.event.addListener(marker, "dblclick", function (e) { 
+         console.log("Double Click");
+         $state.go('app.DriverOrderNonScedualing');
+            });
+       }//function **DoubleClickDriverMarker**
+*/
+
+
       });//fun then
 ////////////////////////////////////////////////////////////////////////////////////////////
-////////////Take All Geolocation (Drivers) From DB *****Only Driver Avarialbe******* ///////////
+////////////Take All Geolocation (Drivers) From DB *****Only Driver **************Avarialbe******* ///////////
        $http.get(API_URL + 'getlocationD').then(function(response){
        console.log("Driver geolocation "+response.data);
        console.log(response.data);
@@ -526,18 +553,41 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
       title: 'Hello World!'
       });//marker
       ///////////////////// To Set Msg IN Marker ////////////////////////////
-       var driveruser="driver"+" "+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+$rootScope.GeolocationDriver[i]['phonenum'];
+       var driveruser="Driver Name:"+" "+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+"Phone Number:"+$rootScope.GeolocationDriver[i]['phonenum'];
        attachSecretMessage(marker, driveruser);
+       DoubleClickDriverMarker(marker, driveruser);
      }//for  
-       function attachSecretMessage(marker, driveruser) {
+function attachSecretMessage(marker, driveruser) {
        var infowindow = new google.maps.InfoWindow({
        content: driveruser
        });
        marker.addListener('click', function() {
        infowindow.open($scope.map, marker);
        });
-       }//function
-     });//get
+       }//function **attachSecretMessage**
+function DoubleClickDriverMarker(marker, driveruser){
+         google.maps.event.addListener(marker, "dblclick", function (e) { 
+         console.log("Double Click"); 
+        // $state.go('app.DriverOrderNonScedualing');
+var confirmPopup = $ionicPopup.confirm({
+     title: 'Order Driver',
+     template: driveruser
+   });
+
+   confirmPopup.then(function(res) {
+     if(res) {
+       console.log('You are sure');
+     } else {
+       console.log('You are not sure');
+     }
+   });
+
+            });
+       }//function **DoubleClickDriverMarker**
+
+
+
+});//get Show Only Driver Avilable
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -572,6 +622,7 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
        ///////////////////// To Set Msg IN Marker ////////////////////////////
        var Alluser="User"+" "+$rootScope.GeolocationAllUser[i]['firstname']+'<br>'+$rootScope.GeolocationAllUser[i]['phonenum'];
        attachSecretMessage(marker, Alluser);
+      // DoubleClickDriverMarker(marker, Alluser);
        }//for
        
        function attachSecretMessage(marker, Alluser) {
@@ -581,7 +632,16 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
        marker.addListener('click', function() {
        infowindow.open($scope.map, marker);
        });
-       }
+       }//fun 
+
+  /*     function DoubleClickDriverMarker(marker, Alluser){
+         google.maps.event.addListener(marker, "dblclick", function (e) { 
+         console.log("Double Click"); 
+         $state.go('app.DriverOrderNonScedualing');
+       });
+       }//function **DoubleClickDriverMarker**
+*/
+
         });//get
 /////////////////////////////////////////////Show ******All Driver/////////////////////////////////
        ////////////Take All Geolocation (Drivers) From DB///////////
@@ -614,8 +674,10 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
       title: 'Hello World!'
       });//marker
       ///////////////////// To Set Msg IN Marker ////////////////////////////
-       var driveruser="driver"+" "+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+$rootScope.GeolocationDriver[i]['phonenum'];
+       var driveruser="Driver Name: "+" "+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+"Phone Number: "+$rootScope.GeolocationDriver[i]['phonenum'];
        attachSecretMessage(marker, driveruser);
+       DoubleClickDriverMarker(marker, driveruser);
+
       }//for  
        function attachSecretMessage(marker, driveruser) {
        var infowindow = new google.maps.InfoWindow({
@@ -625,6 +687,31 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
        infowindow.open($scope.map, marker);
        });
        }//function
+
+
+       function DoubleClickDriverMarker(marker, driveruser){
+         google.maps.event.addListener(marker, "dblclick", function (e) { 
+         console.log("Double Click"); 
+         //$state.go('app.DriverOrderNonScedualing');
+   var confirmPopup = $ionicPopup.confirm({
+     title: 'Order Driver',
+     template: driveruser
+   });
+
+   confirmPopup.then(function(res) {
+     if(res) {
+       console.log('You are sure');
+     } else {
+       console.log('You are not sure');
+     }
+   });
+
+
+
+
+   });
+       }//function **DoubleClickDriverMarker**
+
       });//get
 
  ////////////Take All Geolocation (Manger) From DB Only for Driver & Manger ***NOT for user///////////
@@ -650,6 +737,8 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
 
        var manger="Manger"+" "+$rootScope.GeolocationManger[i]['firstname']+'<br>'+$rootScope.GeolocationManger[i]['phonenum'];
        attachSecretMessage(marker, manger);
+ //DoubleClickDriverMarker(marker, manger);
+
        }//for
        
   function attachSecretMessage(marker, manger) {
@@ -657,10 +746,22 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
           content: manger
         });
 
+
         marker.addListener('click', function() {
           infowindow.open($scope.map, marker);
         });
         }
+      
+ /*//manger
+ function DoubleClickDriverMarker(marker, driveruser){
+         google.maps.event.addListener(marker, "dblclick", function (e) { 
+         console.log("Double Click"); 
+         $state.go('app.DriverOrderNonScedualing');
+
+            });
+       }//function **DoubleClickDriverMarker**
+   */    
+
         });//get
 
 
@@ -726,6 +827,7 @@ console.log("at end of controoler "+$rootScope.lati,$rootScope.long);
 
 
 })
+
 
 
 

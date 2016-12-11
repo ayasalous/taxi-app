@@ -6,6 +6,11 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'starter.directives'])
 
+
+
+
+
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -19,6 +24,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'starter
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    var notificationOpenedCallback = function(jsonData) {
+    console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+  };
+
+ /* window.plugins.OneSignal
+    .startInit("YOUR_APPID", "YOUR_GOOGLE_PROJECT_NUMBER_IF_ANDROID")
+    .handleNotificationOpened(notificationOpenedCallback)
+    .endInit();
+*/
+    
   });
 })
 
@@ -94,6 +110,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'starter
     }
   })
 
+/*
+.state('appDriver', {
+    url: '/appDrier',
+    abstract: true,
+    templateUrl: 'templates/menuDriver.html',
+    
+  })
+
+
+.state('appDriver.driver', {
+    url: '/driver',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/driver.html',
+          controller: 'DriverCtrl'
+      }
+    }
+  })
+  */
+
+
+
+.state('app.DriverOrderNonScedualing', {
+    url: '/DriverOrderNonScedualing',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/DriverOrderNonScedualing.html',
+          controller: 'DriverOrderNonScedualingCtrl'
+      }
+    }
+  })
+
+
+
 .state('app.driver', {
     url: '/driver',
     views: {
@@ -103,6 +153,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'starter
       }
     }
   })
+
+
 
 .state('app.tab', {
     url: '/tab',

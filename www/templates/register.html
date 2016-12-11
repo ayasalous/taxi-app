@@ -13,55 +13,60 @@
 
 
 <div class="mangername" class="padding">
-    <form class="marginForm" ng-submit="submitRegister()">  
+    <form ng-submit="submitRegister()">   
     <div class="list">
-	 
-	 <label  class="item item-input item-floating-label">
-    <span class="input-label">First Name</span>
-    <input id="input" type="text" placeholder="First Name" ng-model="user.first" required="please you must fill this field ">
+	 <div class="marginForm" >
+
+	
+
+	 <label style="background-color:rgba(179,220,237,1) "  class="item item-input ">
+    <span class="input-label"> <i class="icon ion-person">&nbsp;&nbsp;First Name </i> </span>
+    <input id="input" type="text" ng-model="user.first" required="please you must fill this field ">
   </label>
 	 
-	  <label   class="item item-input item-floating-label">
-	    <span class="input-label">Last Name</span>
-	    <input  id="input" type="text" placeholder="Last Name" ng-model="user.last" required="please you must fill this field ">
+	  <label  style="background-color:rgba(179,220,237,1) " class="item item-input ">
+	    <span class="input-label"><i class="icon ion-person">&nbsp;&nbsp;Last Name</i></span>
+	    <input  id="input" type="text"  ng-model="user.last" required="please you must fill this field ">
 	  </label>
 	 
-	  <label class="item item-input item-floating-label">
-	    <span class="input-label">Email</span>
-	    <input id="input" type="email" pattern="[^ @]*@[^ @]*"  placeholder="Email" ng-model="user.email"
+	  <label style="background-color:rgba(179,220,237,1) " class="item item-input">
+	    <span class="input-label"> <i class="icon ion-email">&nbsp;&nbsp;Email</i></span>
+	    <input id="input" type="email" pattern="[^ @]*@[^ @]*"   ng-model="user.email"
 	    required="please you must fill this field ">
 	  </label>
 	  
-	  <label class="item item-input item-floating-label">
-	    <span class="input-label">Password</span>
-	    <input id="input" type="password" placeholder="Password" ng-model="user.password" required="please you must fill this field ">
+	  <label  style="background-color:rgba(179,220,237,1) " class="item item-input">
+	    <span class="input-label"> <i class="icon ion-locked">&nbsp;&nbsp;Password</i></span>
+	    <input id="input" type="password"  ng-model="user.password" required="please you must fill this field ">
 	  </label>
 
-<label class="item item-input item-floating-label">
-	    <span class="input-label">Mobile Number</span>
-	    <input id="input" type="number" placeholder="Mobile number " ng-model="user.number" required="please you must fill this field ">
+<label style="background-color:rgba(179,220,237,1) " class="item item-input ">
+	    <span class="input-label"><i class="icon ion-ios-telephone">&nbsp;&nbsp;Mobile Number</i></span>
+	    <input id="input" type="number"  ng-model="user.number" required="please you must fill this field ">
 	  </label>
+</div>
 
 <br>
-   &nbsp;  <font style="font-family: 'fontawesome';font-size:20px;  font-weight: normal;
-     font-style: normal;color:#387ef5"> Type OF User: </font>
-    
+<div class="marginForm" >  
+ &nbsp;
+ <font style="font-family: 'fontawesome';font-size:25px;  font-weight: normal;
+font-style: normal;color:#387ef5"> <br>&nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;&nbsp; &nbsp;Type OF User: </font>
+    <br><br>
 <ion-list >
-  <ion-radio   id="radiocheck" ng-model="user.type" ng-click="show=false;" ng-value="'manger'">Manger</ion-radio>
-  <ion-radio  id="radiocheck" ng-model="user.type" ng-click="show=true;"  ng-value="'driver'">Driver</ion-radio>
-  <ion-radio  id="radiocheck" ng-model="user.type" ng-click="show=false;"  ng-value="'user'">User</ion-radio>
+  <ion-radio style="color:#387ef5 "   id="radiocheck" ng-model="user.type" ng-click="show=false;" ng-value="'manger'">Manger</ion-radio>
+  <ion-radio style="color:#387ef5 "  id="radiocheck" ng-model="user.type" ng-click="show=true;"  ng-value="'driver'">Driver</ion-radio>
+  <ion-radio  style="color:#387ef5 " id="radiocheck" ng-model="user.type" ng-click="show=false;"  ng-value="'user'">User</ion-radio>
   </ion-list>
-<br>
 
 
 
 <div ng-if="show">
- <label   class="item item-input item-floating-label">
+ <label style="background-color:#ffffff ;height: 70px"  class="item item-input item-floating-label">
 	    <span   class="input-label">Car Number</span>
 	    <input   type="number" placeholder="Car Number " ng-model="user.carnum" required="please you must fill this field ">
 	  </label>
 </div>
-
+</div>
 <div class="padding assertive" style="font-size:18px;">
 	{{ result }}
 </div>
