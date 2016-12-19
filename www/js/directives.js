@@ -44,7 +44,7 @@ angular.module('starter.directives', [])
           strokeWeight: 2
         });
 
-        flightPath.setMap(map);
+      //  flightPath.setMap(map);
 
 
 

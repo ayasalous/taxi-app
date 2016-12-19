@@ -38,8 +38,10 @@ angular.module('starter.controllers', ['ionic.rating','ionic-modal-select',"ion-
 .controller('loginPageCtrl', function($scope,$http, $rootScope,$state,$ionicLoading) {
        $scope.loginData = {};//must put outside of function submit
      $rootScope.LoginData={};
+     $rootScope.emailLogin;
        $scope.doLogin = function() {
        console.log('Doing login', $scope.loginData.email,$scope.loginData.password);
+        $rootScope.emailLogin={'email':$scope.loginData.email};// For Choose Driver
        console.log( $scope.loginData);
       $rootScope.email={"emailuser":$scope.loginData.email};
        
@@ -553,9 +555,21 @@ if ( $rootScope.LoginData[8]=='user'){ //if the type is user then not show all u
       title: 'Hello World!'
       });//marker
       ///////////////////// To Set Msg IN Marker ////////////////////////////
-       var driveruser="Driver Name:"+" "+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+"Phone Number:"+$rootScope.GeolocationDriver[i]['phonenum'];
+      console.log($rootScope.GeolocationDriver);
+       var driveruser="Driver Name:"+$rootScope.GeolocationDriver[i]['firstname']+'<br>'+"Phone Number:"+$rootScope.GeolocationDriver[i]['phonenum'];
+       var VardriverchooseEmail=$rootScope.GeolocationDriver[i]['email'];
        attachSecretMessage(marker, driveruser);
-       DoubleClickDriverMarker(marker, driveruser);
+       DoubleClickDriverMarker(marker, driveruser,VardriverchooseEmail);
+ //check the order Table 
+
+
+
+
+
+
+
+
+
      }//for  
 function attachSecretMessage(marker, driveruser) {
        var infowindow = new google.maps.InfoWindow({
@@ -565,25 +579,85 @@ function attachSecretMessage(marker, driveruser) {
        infowindow.open($scope.map, marker);
        });
        }//function **attachSecretMessage**
-function DoubleClickDriverMarker(marker, driveruser){
+function DoubleClickDriverMarker(marker, driveruser,VardriverchooseEmail){
+    $rootScope.timeOrderNonscedualing={};
+       $scope.hourOrderNonscedualing={};
+       $scope.minuteOrderNonscedualing={};
+       $scope.secondOrderNonscedualing={};
+       $scope.am_pmOrderNonscedualing={};
+$scope.getDatetime = {};
+
          google.maps.event.addListener(marker, "dblclick", function (e) { 
          console.log("Double Click"); 
         // $state.go('app.DriverOrderNonScedualing');
 var confirmPopup = $ionicPopup.confirm({
      title: 'Order Driver',
      template: driveruser
-   });
+     });
 
-   confirmPopup.then(function(res) {
+     confirmPopup.then(function(res) {
      if(res) {
-       console.log('You are sure');
-     } else {
-       console.log('You are not sure');
-     }
-   });
 
-            });
-       }//function **DoubleClickDriverMarker**
+    console.log('You are sure');
+    console.log("dirverchoosen is=== "+ VardriverchooseEmail);   
+    console.log("User Email is=== "+ $rootScope.emailLogin.email); 
+    console.log("driver Doubleclick Info "+driveruser);
+    
+$scope.getDatetime = new Date();
+
+console.log($scope.getDatetime);
+       var timeOrderNonscedualing = $scope.getDatetime.toString().split(" ");
+       var time1OrderNonscedualing = timeOrderNonscedualing[0];
+       var time2OrderNonscedualing = timeOrderNonscedualing[1];
+       console.log( timeOrderNonscedualing);
+       console.log(time1OrderNonscedualing);
+       console.log(time2OrderNonscedualing);
+
+
+       var AllhourOrderNonscedualing = timeOrderNonscedualing[4].toString().split(":");
+       $scope.hourOrderNonscedualing=AllhourOrderNonscedualing[0];
+       $scope.minuteOrderNonscedualing=AllhourOrderNonscedualing[1];
+       $scope.secondOrderNonscedualing=AllhourOrderNonscedualing[2];
+
+       console.log(AllhourOrderNonscedualing);
+       console.log(AllhourOrderNonscedualing[0]);
+       console.log(AllhourOrderNonscedualing[1]);
+       console.log(AllhourOrderNonscedualing[2]);
+       if (12<$scope.hourOrderNonscedualing){
+       $scope.hourOrderNonscedualing=$scope.hourOrderNonscedualing-12;
+       $scope.am_pmOrderNonscedualing="pm";
+       }else
+       $scope.am_pmOrderNonscedualing="am";
+      
+
+console.log($scope.hourOrderNonscedualing);
+console.log($scope.minuteOrderNonscedualing);
+console.log($scope.secondOrderNonscedualing);
+console.log($scope.am_pmOrderNonscedualing);
+
+ $scope.DriverInfoFromDoubleClick={"driverEmial":VardriverchooseEmail,
+                                   "UserEmail":$rootScope.emailLogin.email,
+                                   "hourOrder":$scope.hourOrderNonscedualing,
+                                   "secondorder": $scope.minuteOrderNonscedualing,
+                                    "am_pm":$scope.am_pmOrderNonscedualing};
+
+
+
+
+    $http.post( API_URL +'DoubleclickToOrderDriver',$scope.DriverInfoFromDoubleClick)
+       .then(function(response){
+console.log(response.data);
+
+
+
+    });
+
+     } else {
+     console.log('You are not sure');
+     }
+     });
+     });
+     }//function **DoubleClickDriverMarker**
 
 
 

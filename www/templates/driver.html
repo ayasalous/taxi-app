@@ -21,11 +21,12 @@
 <button menu-toggle = "left" class = "button button-icon icon ion-navicon"></button>
 <ion-view class="background" view-title="Driver Page">
   <ion-content class="padding">  
+  <br><br>
 <div   class="drivername" class="list">
     <a  id="imageup" class="item item-avatar" href="#">
       <img src="/img/driver.png">
      {{genericOfficeName}}   Taxi Office 
-     <br> <h2>Welcome  Driver : {{  genericFirstName}} {{genericsecondName}}  </h2>
+     <br> <h2>Welcome  Driver: <br>{{  genericFirstName}} {{genericsecondName}}  </h2>
     </a>
 </div>
 
@@ -35,7 +36,7 @@
 
 <div   class="drivername" class="list">
  <ul class="list">
-  <li class="item item-toggle">
+  <li  class="item item-toggle">
   <!--<i style="size: 90px" class="icon icon  ion-android-car ">&nbsp;&nbsp; Are you Avilable ?</i>
    -->
  
@@ -50,19 +51,28 @@
          <div class="handle"></div>
        </div>
      </label>
-     
+  
+   <a   id="imageupDriverPage" class="item item-avatar" href="#">
+      <img src="/img/hint.png">When User Order you <br>
+                                the UserMarker looks <br> like this: <br>   <img style="width: 60px !important;margin-left: 10px !important;margin-left:60px !important;margin-top: 0px !important" src="/img/locationUser.png">
+    </a>   
   </li>
+
+
 </ul>
 </div>
 
 
-
+<!--
 <rating  readonly="readOnly" ng-model="rating.rate" max="rating.max"></rating>
 
 
 
  <button class="button" ng-click="add()">Add notification</button>
     <button class="button" ng-click="isScheduled()">Is Scheduled</button>
+-->
+
+
 
 
 <!--<rating  readonly="readOnly" ratingsobj='ratingsObject' max="rating.max"></rating>
@@ -83,6 +93,26 @@
 </div>
 
 
+
+
+search ADd driver 
+
+
+ <a class="tab-item active " href="#/app/manger"> 
+        <i class="icon  ion-android-warning"></i>
+         ADD urgent event
+      </a>
+    
+       <a class="tab-item" href="#/app/map">
+        <i class="icon ion-location"></i>
+        Settings
+      </a>
+
+
+      <a  ng-click="goShowDriver()" class="tab-item " href="#/app/showDriver">
+      <i class="icon ion-ios-bookmarks" ></i>
+       OderList 
+     </a>
 -->
 
  
@@ -90,14 +120,11 @@
     <div id="tabcss" class="tabs">
       
       
-     <a  ng-click="goShowDriver()" class="tab-item " href="#/app/showDriver">
-      <i class="icon ion-ios-bookmarks" ></i>
-      ADD journey
-     </a>
+     
       
       <a class="tab-item active " href="#/app/manger"><!-- search ADd driver-->
-        <i class="icon  ion-android-warning"></i>
-         ADD urgent event
+        <i class="icon  ion-ios-list"></i>
+        
       </a>
     
        <a class="tab-item" href="#/app/map">
